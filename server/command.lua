@@ -1,12 +1,13 @@
 local usage = {
-    {"VERB",               "FUNCTION"},
-    {"check [zone name]",  "Checks if the named zone file is valid, but does not load it."},
-    {"edit [zone name]",   "Puts the zone of the given name into edit mode."},
-    {"help",               "Gives you this lovely message!"},
-    {"list",               "Display a list of active trigger zones."},
-    {"load [zone name]",   "Loads the named zone from disk, even if it's already loaded.",},
-    {"new [initial name]", "Creates a new, blank zone for editing, with that initial name."},
-    {"save <new name>",    "Takes no arguments, saves the zone being edited, optionally under a new name."},
+    {"Verb",   "Arg",  "Function"},
+    {"cancel", "",     "Cancel the current edit, discarding all changes since last save."},
+    -- {"check",  "name", "Checks if the named zone file is valid, but does not load it."},  -- TODO: Implement check verb
+    {"edit",   "name", "Puts the zone of the given name into edit mode."},
+    {"help",   "",     "Gives you this lovely message!"},
+    -- {"list",   "",     "Display a list of loaded trigger zones."}, -- TODO: Implement list verb
+    {"load",   "name", "Loads the named zone from disk, even if it's already loaded.",},
+    {"new",    "name", "Creates a new, blank zone for editing, with that initial name."},
+    {"save",   "name", "Saves the zone being edited, optionally under a new name."},
 }
 
 function SendMessage(source, ...)
@@ -14,7 +15,7 @@ function SendMessage(source, ...)
     local args = {...}
     if source == 0 then
         if type(args[1]) == "table" then
-            args = FormatTable(args[1], true)
+            args = FormatTable(args[1], true, false)
         end
         for _, line in ipairs(args) do
             print(line)
@@ -25,12 +26,17 @@ function SendMessage(source, ...)
     TriggerClientEvent("triggerzone:message", source, ...)
 end
 
+function CloseBlocker(source)
+    if source == 0 then return end
+    TriggerClientEvent("triggerzone:closeBlocker", source)
+end
+
 local function checkZone(source, args)
     -- TODO: Read file and see that it loads properly, but *DO NOT* send to clients or add to TRIGGERZONE table.
 end
 
-local function discardEdit(source, args)
-    TriggerClientEvent("triggerzone:discard", source)
+local function cancelEdit(source, args)
+    TriggerClientEvent("triggerzone:cancel", source)
 end
 
 local function editZone(source, args)
@@ -94,11 +100,11 @@ local function saveZone(source, args)
 end
 
 local commandVerbs = {
-    check = checkZone,
-    discard = discardEdit,
+    cancel = cancelEdit,
+    -- check = checkZone,
     edit = editZone,
     help = helpMessage,
-    list = listZones,
+    -- list = listZones,
     load = loadZone,
     new  = newZone,
     save = saveZone,
@@ -115,7 +121,6 @@ RegisterCommand("triggerzone", function(source, args, raw)
     if commandVerbs[verb] then
         commandVerbs[verb](source, args)
     else
-        -- TODO:  Treat this differently?
         commandVerbs["help"](source, args)
     end
 end, true)

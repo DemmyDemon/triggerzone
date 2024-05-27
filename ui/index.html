@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>TriggerZone UI</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="styleTop.css" />
+    <link rel="stylesheet" type="text/css" href="styleRightSide.css" />
+    <link rel="stylesheet" type="text/css" href="styleBottom.css" />
+</head>
+
+<body>
+
+      
+    <section id="rightSection">
+        <div class="rightSectionWrapper">
+            <h1>Points</h1>
+            <p id="toggleTableButton"> ➲ </p>
+
+            <div class="tableWrapper">
+                <table id="table" class="table">
+                    <tr>
+                        <th></th>
+                        <th>X</th>
+                        <th>Y</th>
+                    </tr>
+                </table>
+            </div>
+            
+            <section class="action">
+                <h2>Action</h2>
+                <button class="smallButtonGreen button" id="viewButton">View</button>
+                <button class="smallButtonRed button" id="deleteButton">Delete</button>
+            </section>
+        </div>
+    </section>
+
+
+
+  <section id="topSection">
+        <div class="topSectonWrapper">
+            <h1 class="colorSectionTitle">Colors</h1>
+            
+            <form id="colorForm" class="colorForm">
+                <p class="colorLabel"> </p>
+                <p class="colorLabel">R</p>
+                <p class="colorLabel">G</p>
+                <p class="colorLabel">B</p>
+                <p class="colorLabelLong">A (lines)</p>
+                <p class="colorLabelLong">A (walls)</p>
+
+                <h2 class="colorTitle">Active zone color:</h2>
+                <section class="colorInput">
+                    <input type="range" min="0" max="255" class="activeZoneColor" />
+                    <p>128</p>
+                </section>
+                <section class="colorInput">
+                    <input type="range" min="0" max="255" class="activeZoneColor" />
+                    <p>128</p>
+                </section>
+                <section class="colorInput">
+                    <input type="range" min="0" max="255" class="activeZoneColor" />
+                    <p>128</p>
+                </section>
+                <section class="colorInput">
+                    <input type="range" min="0" max="255" class="activeZoneColor" />
+                    <p>128</p>
+                </section>
+                <section class="colorInput">
+                    <input type="range" min="0" max="255" class="activeZoneColor" />
+                    <p>128</p>
+                </section>
+                
+                <h2 class="colorTitle">Inactive zones color:</h2>
+                <section class="colorInput">
+                    <input type="range" min="0" max="255" class="inactiveZoneColor" />
+                    <p>128</p>
+                </section>
+                <section class="colorInput">
+                    <input type="range" min="0" max="255" class="inactiveZoneColor" />
+                    <p>128</p>
+                </section>
+                <section class="colorInput">
+                    <input type="range" min="0" max="255" class="inactiveZoneColor" />
+                    <p>128</p>
+                </section>
+                <section class="colorInput">
+                    <input type="range" min="0" max="255" class="inactiveZoneColor" />
+                    <p>128</p>
+                </section>
+                <section class="colorInput">
+                    <input type="range" min="0" max="255" class="inactiveZoneColor" />
+                    <p>128</p>
+                </section>
+                
+            </form>
+        </div>
+    </section>
+
+
+    <section id="bottomSection">
+        <div class="bottomSectionWrapper">
+            
+            <form id="mainForm" class="mainForm">
+                <section class="mainInputs">
+                    <section class="mainInput">
+                        <label for="zoneName">Zone name:</label>
+                        <input type="text" id="zoneName" name="zoneName" />
+                    </section>
+                    
+                    <section class="mainInput">
+                        <label for="altitude">Altitute:</label>
+                        <input type="number" min="44" max="112" step=".01" id="altitude" name="altitude" value="54.92" />
+                    </section>
+                    
+                    <section class="mainInput">
+                        <label for="height">Height:</label>
+                        <input type="number" min="0" max="3" step=".01" id="height" name="height" value="2.58" />
+                    </section>
+                </section>
+
+                <section class="mainActions">
+                    <label for="event" class="toggleButton button" id="eventButton"> Event 
+                        <input type="checkbox" id="event" name="event"/> 
+                        <span class="checkmark"></span>
+                    </label>
+                    
+                    <label for="draw" class="toggleButton button" id="drawButton"> Draw 
+                        <input type="checkbox" id="draw" name="draw"/> 
+                        <span class="checkmark"></span>
+                    </label>
+
+                    <h1>TriggerZone</h1>
+                    
+                    <button id="cancel" class="buttonRed button">Cancel</button>
+                    <button id="save" class="buttonGreen button">Save</button>
+                </section>
+            </form>
+        </div>
+    </section>
+
+    <section id="alert" class="alertBackground hidden">
+        <div class="alertWrapper">
+            <div id="alertMessage">
+                <p>Oopsie Daisies!</p>
+                <p>It seems the gremlins in the system have had a little party and something went slightly askew.</p>
+                <p>Fear not! Our tech wizards are already on a quest to set things right. Please try again in a jiffy, or perhaps after a cup of tea.</p>
+                <p>✨ Error Code: Mischief Managed ✨</p>
+            </div>
+
+            <button id="alertButton" class="buttonGreen button">Close</button>
+        </div>
+    </section>
+
+  <script src="script.js"></script>
+  <script src="scriptTop.js"></script>
+  <script src="scriptRightSide.js"></script>
+  <script src="scriptBottom.js"></script>
+  <script src="scriptFivemGlue.js"></script>
+</body>
+
+</html>

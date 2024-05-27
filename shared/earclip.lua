@@ -132,7 +132,6 @@ function TriangulatePolygon(vertices)
 	end
 
 	if selfIntersects(vertices) then
-		print('Warning:  triggerzone failed to triangulate polygon because it self-intersects')
 		return {}
 	end
 
@@ -177,8 +176,13 @@ function TriangulatePolygon(vertices)
 	return triangles
 end
 
-function Triangulate(rawVertices)
-    local vertices = CleanPolygon(rawVertices)
+function Triangulate(rawVertices, skipClean)
+	local vertices
+	if skipClean then
+		vertices = table.clone(rawVertices)
+	else
+    	vertices = CleanPolygon(rawVertices)
+	end
 	local triangles = TriangulatePolygon(vertices)
     return vertices, triangles
 end

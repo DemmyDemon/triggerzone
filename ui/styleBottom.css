@@ -1,0 +1,46 @@
+
+#bottomSection {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+}
+.bottomSectionWrapper {
+    position: relative;
+    background-color: var(--black);
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    padding: 0.5rem 1rem;
+}
+
+.mainInputs, .mainActions {
+    margin: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.mainInput > input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--white);
+}
+.mainInput > input[type="number"] { 
+    width: 5rem;
+    text-align: center;
+}
+.mainInput > input[type="number"] { 
+    border-radius: 0 8px 8px 0;
+}
+.mainActions > h1 {
+    color: var(--blue);
+    text-shadow: 0 0 1px var(--black);
+}
+.mainActions > h1:hover {
+    transition-delay: 5s;
+    transform: scale3d(5,5,5) translateY(-5px);
+}

@@ -3,6 +3,9 @@ local EDITORCAM = 0
 local TARGETBLIP = 0
 local ZERO = vector3(0,0,0)
 local SPEED = Config.Editor?.Speed?.Start or 10
+local vertexFormat = "%0.2f"
+
+local MOVING
 
 AddTextEntry('TZEDITOR', 'Editing ~a~~n~~1~ Verices~n~Speed: ~1~%~n~~a~')
 
@@ -11,6 +14,23 @@ local function getCam()
         EDITORCAM = CreateCam('DEFAULT_SCRIPTED_CAMERA', true)
     end
     return EDITORCAM
+end
+
+function MakeUiPoints(vertices)
+    local points = {}
+    for i, vertex in ipairs(vertices) do
+        table.insert(points, {i, string.format(vertexFormat, vertex.x), string.format(vertexFormat, vertex.y)})
+    end
+    return points
+end
+
+local function foramatRGBAA(color)
+    color = color or {255, 0, 0, 0, 255, 255}
+    return {
+        color = {color[1] or 255, color[2] or 0, color[3] or 0},
+        lines = color[4] or 255,
+        walls = color[5] or 128,
+    }
 end
 
 function EditorShutdown()
@@ -22,6 +42,8 @@ function EditorShutdown()
     RemoveBlip(TARGETBLIP)
     UnlockMinimapAngle()
     UnlockMinimapPosition()
+    SendNUIMessage({type = "abort"})
+    SetNuiFocus(false, false)
     EDITORCAM = 0
     EDITING = false
 end
@@ -37,8 +59,20 @@ function EditorStart(zoneName)
     SetCamCoord(cam, coords.x, coords.y, coords.z)
     SetCamRot(cam, rot.x, rot.y, rot.z, 2)
     SetCamFov(cam, fov)
-
     EDITING = zoneName
+
+    local zone = TRIGGERZONES[zoneName]
+    SendNUIMessage({
+        type = 'loaded',
+        name = zone.label or zoneName,
+        altitude = zone.altitude or 0.0,
+        height = zone.height or 2.0,
+        events = zone.events or false,
+        draw = zone.draw or false,
+        activeRGBAA = foramatRGBAA(zone.color?.inside),
+        inactiveRGBAA = foramatRGBAA(zone.color?.outside),
+        points = MakeUiPoints(zone.points)
+    })
 
 end
 
@@ -228,7 +262,7 @@ local function drawMarker(ray, delete)
         return
     end
 
-    local scale = Config?.Editor?.DeleteProximity or 0.2
+    local scale = Config?.Editor?.InteractProximity or 0.2
     local green = 255
     if delete then green = 0 end
 
@@ -352,39 +386,61 @@ function EditorFrame()
     if ray.hit then
         dist, _ , idx = ClosestVertex(zone.points, ray.coords.xy)
     end
-    local delete = (dist < (Config?.Editor?.DeleteProximity or 0.1))
-    drawMarker(ray, delete)
-    local insertIdx = drawBeam(ray, delete)
-    if delete then
-        drawEditorText(#zone.points,("Delete vertex %d (%0.3f)"):format(idx, dist))
+    local interact = (dist < (Config?.Editor?.InteractProximity or 0.1))
+    drawMarker(ray, interact)
+    local insertIdx = drawBeam(ray, interact)
+    if interact then
+        drawEditorText(#zone.points,("Vertex %d"):format(idx))
     else
         drawEditorText(#zone.points,("Add new vertex %d"):format(insertIdx))
     end
 
     local refresh = false
 
-    if IsDisabledControlJustPressed(0, Config?.Editor?.Keys?.Insert or 24) then
-        table.insert(zone.points, insertIdx, ray.coords.xy)
+    if ray.hit and IsDisabledControlJustPressed(0, Config?.Editor?.Keys?.Interact or 24) then
+        if interact then
+            MOVING = idx
+        else
+            table.insert(zone.points, insertIdx, ray.coords.xy)
+            refresh = true
+            if #zone.points == 1 then
+                zone.altitude = ray.coords.z - 0.05
+                SendNUIMessage({type="setAltitude", altitude=zone.altitude})
+            end
+        end
+    end
+
+    if MOVING and ray.hit then
+        zone.points[MOVING] = ray.coords.xy
         refresh = true
-        if #zone.points == 1 then
-            zone.altitude = ray.coords.z - 0.05
+    end
+
+    if IsDisabledControlJustReleased(0, Config?.Editor?.Keys?.Interact or 24) then
+        if MOVING then
+            MOVING = nil
+            refresh = true
         end
     end
 
     if IsDisabledControlJustPressed(0, Config?.Editor?.Keys?.Delete or 25) then
-        if delete then
+        if interact then
             refresh = true
             table.remove(zone.points, idx)
         end
     end
 
-    if refresh then
+    if IsDisabledControlJustPressed(0, Config?.Editor?.Keys?.Focus or 22) then
+        SetNuiFocus(true, true)
+    end
+
+    if refresh and not MOVING then
         Citizen.Wait(0) -- Yield the thread for a moment, to let the table manipulation settle.
         zone.points, zone.triangles = Triangulate(zone.points)
-        zone.centroid = Centroid(TRIGGERZONES[EDITING].points)
+        zone.centroid = Centroid(zone.points)
         if zone.centroid then
             zone.labelPoint = vec3(zone.centroid.x, zone.centroid.y, zone.altitude + (zone.height/2))
         end
+        SendNUIMessage({type="populateTable", points=MakeUiPoints(zone.points)})
     end
 
     adjustHeight(zone)

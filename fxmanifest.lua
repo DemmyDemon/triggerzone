@@ -8,3 +8,5 @@ lua54 'yes'
 shared_scripts { 'config.lua', 'shared/*.lua' }
 server_scripts { 'server/*.lua' }
 client_scripts { 'client/*.lua' }
+files { 'ui/*.html', 'ui/*.js', 'ui/*.css' }
+ui_page 'ui/index.html'

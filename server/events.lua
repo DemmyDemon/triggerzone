@@ -33,10 +33,9 @@ RegisterNetEvent('triggerzone:resend', function(name)
     local source = source
     if TRIGGERZONES[name] then
         TriggerLatentClientEvent('triggerzone:add', source, 1024, name, TRIGGERZONES[name])
-        SendMessage(source, 'Got a fresh copy of the zone from the server.')
         return
     end
-    SendMessage(source, 'Could not re-send the zone from the server, as it did not exist there.')
+    CloseBlocker(source)
 end)
 
 RegisterNetEvent('triggerzone:save-zone', function(name, data)

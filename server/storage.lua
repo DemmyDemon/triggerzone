@@ -31,6 +31,7 @@ function Set(name, zoneData)
         draw = zoneData.draw or false,
         events = zoneData.events or false,
         version = zoneData.version or 1,
+        color = zoneData.color,
     }
     TriggerLatentClientEvent('triggerzone:add', -1, 1024, name, TRIGGERZONES[name])
     return true
@@ -66,6 +67,7 @@ function Store(name, zone)
         points = zone.points or {},
         events = zone.events or false,
         version = zone.version or 1,
+        color = zone.color,
     })
     local size = string.len(data)
     local filename = ZonesDirFile(UniformZoneFilename(name))

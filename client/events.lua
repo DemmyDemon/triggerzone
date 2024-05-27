@@ -16,34 +16,71 @@ function PrepareZone(name, zone)
 end
 
 function MessageOK(...)
-    --TODO: Message modal with OK button.
+    local msg = ""
     for _, line in ipairs({...}) do
         print('OK:', line)
+        msg = string.format("%s %s<br/>", msg, line)
     end
+    SendNUIMessage({
+        type = 'message',
+        message = msg,
+    })
+end
+
+function MessageTable(...)
+    local msg = "<table>"
+    print(json.encode(({...})[1]))
+    for _, line in ipairs(FormatTable(({...})[1], true, true)) do
+        msg = msg .. line
+    end
+    msg = msg .. '</table>'
+    SendNUIMessage({
+        type = 'message',
+        message = msg,
+    })
 end
 
 function MessageCrap(...)
-    --TODO: Error modal with "Crap" button.
+    local msg = "Oh crap...<br/>"
     for _, line in ipairs({...}) do
         print('CRAP:', line)
+        msg = msg .. line .. '<br/>'
     end
+    SendNUIMessage({
+        type = 'message',
+        message = msg,
+    })
 end
 
 function MessageBlock(...)
-    --TODO: Message modal with *no* buttons. Spinner?
+    local msg = "Please wait...<br/>"
     for _, line in ipairs({...}) do
         print('BLOCK:', line)
+        msg = msg .. line .. '<br/>'
     end
+    SendNUIMessage({
+        type = 'message',
+        message = msg,
+    })
 end
 
 RegisterNetEvent('triggerzone:message', function(...)
-    MessageOK(...)
+    if type(({...})[1]) == "table" then
+        MessageTable(...)
+    else
+        MessageOK(...)
+    end
+end)
+
+RegisterNetEvent('triggerzone:closeBlocker', function()
+    SendNUIMessage({type = "ok"})
 end)
 
 RegisterNetEvent('triggerzone:add', function(name, zone)
     print('Got zone data for', name)
     TRIGGERZONES[name] = zone
     PrepareZone(name, zone)
+    SendNUIMessage({type = "ok"})
 end)
 
 RegisterNetEvent('triggerzone:addBulk', function(zones)
@@ -52,6 +89,7 @@ RegisterNetEvent('triggerzone:addBulk', function(zones)
         PrepareZone(name, zone)
         print('Bulk adding', name)
     end
+    SendNUIMessage({type = "ok"})
 end)
 
 RegisterNetEvent('triggerzone:save-zone', function()
@@ -67,7 +105,7 @@ RegisterNetEvent('triggerzone:save-zone', function()
     TriggerLatentServerEvent('triggerzone:save-zone', 2048, EDITING, TRIGGERZONES[EDITING])
 end)
 
-RegisterNetEvent('triggerzone:discard', function()
+RegisterNetEvent('triggerzone:cancel', function()
     if not EDITING then
         MessageOK("Can't discard changes when not editing.")
         return
@@ -80,7 +118,7 @@ end)
 
 RegisterNetEvent('triggerzone:edit', function(zoneName)
     if EDITING then
-        MessageOK("You are already editing a zone. You must discard this edit before you can start another.")
+        MessageOK("You are already editing a zone. You must cancel this edit before you can start another.")
         return
     end
     print("Preparing to edit", zoneName)
@@ -93,7 +131,7 @@ end)
 
 RegisterNetEvent('triggerzone:new-zone', function(zoneName)
     if EDITING then
-        MessageOK("You are already editing a zone. You must discard this edit before you can start another.")
+        MessageOK("You are already editing a zone. You must cancel this edit before you can start another.")
         return
     end
     print("Starting new zone", zoneName)

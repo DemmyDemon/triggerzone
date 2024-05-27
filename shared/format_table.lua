@@ -2,9 +2,13 @@
 --- Transforms a table of tables into a possibly Markdown-formatted table
 ---@param tbl table The table to be sorted
 ---@param sorted boolean? If true, the resulting table will be very naïvely sorted.
----@param skipDivider boolean? If true, a divider line is omitted. This line is required for Markdown!
+---@param html boolean? If true, the output will be formatted as a HTML table.
 ---@return table lines Table of strings containing the lines of the table. Just iterate and print.
-function FormatTable(tbl, sorted, skipDivider)
+function FormatTable(tbl, sorted, html)
+
+    local before = html  and "<tr><td>"   or "|"
+    local between = html and "</td><td>"  or "|"
+    local after  = html  and "</td></tr>" or "|"
 
     local width = {} -- Stores the width of each column.
     local maxIndex = 0 -- Stores the highest number of columns seen for a row
@@ -23,9 +27,23 @@ function FormatTable(tbl, sorted, skipDivider)
     end
 
     -- Pre-build the formatting string, as it's the same for all lines
-    local formatString = "|"
+    local formatRow = before
     for i = 1, maxIndex do
-        formatString = formatString .. " %-" .. width[i] .."s |"
+        if i ~= maxIndex then
+            formatRow = formatRow .. " %-" .. width[i] .."s " .. between
+        else
+            formatRow = formatRow .. " %-" .. width[i] .."s " .. after
+        end
+    end
+    local formatHeader = "<tr><th>"
+    if html then
+        for i = 1, maxIndex do
+            if i ~= maxIndex then
+                formatHeader = formatHeader .. " %-" .. width[i] .."s </th><th>"
+            else
+                formatHeader = formatHeader .. " %-" .. width[i] .."s </th></tr>"
+            end
+        end
     end
 
     for i, line in ipairs(tbl) do
@@ -36,9 +54,13 @@ function FormatTable(tbl, sorted, skipDivider)
             table.insert(line, "")
         end
 
-        table.insert(lines, string.format(formatString, table.unpack(line)))
+        if not html or i ~= 1 then
+            table.insert(lines, string.format(formatRow, table.unpack(line)))
+        else
+            table.insert(lines, string.format(formatHeader, table.unpack(line)))
+        end
 
-        if i == 1 and not skipDivider then
+        if i == 1 and not html then
             local divider = "|"
             for j = 1, maxIndex do
                 divider = divider .. string.rep("-", width[j] + 2) .. "|"  -- Width+2 because we are adding spaces around the data
@@ -48,18 +70,21 @@ function FormatTable(tbl, sorted, skipDivider)
     end
 
     if sorted then
-        local header, divider
-        if not skipDivider then
-            -- We don't want to sort the header and divider.
-            header = table.remove(lines, 1)
+        local divider
+
+        -- We don't want to sort the header and divider.
+        local header = table.remove(lines, 1)
+        if not html then
             divider = table.remove(lines, 1)
         end
+
         table.sort(lines) -- Yep, sorts with the | prefix and everything ¯\_(ツ)_/¯
-        if not skipDivider then
-            -- Don't forget to add them back in!
+        
+        -- Don't forget to add them back in!
+        if not html then
             table.insert(lines, 1, divider)
-            table.insert(lines, 1, header)
         end
+        table.insert(lines, 1, header)
     end
 
     return lines

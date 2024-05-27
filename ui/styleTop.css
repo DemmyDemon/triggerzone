@@ -1,0 +1,55 @@
+#topSection {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: center;
+}
+
+.topSectonWrapper {
+    position: relative;
+    background-color: var(--black);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    padding: 0.5rem 1.5rem;
+}
+
+.colorSectionTitle {
+    position: absolute;
+}
+
+.colorForm  {
+    display: grid;
+    margin-top: 8px;
+
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.5rem;
+    justify-items: center;
+}
+
+.colorTitle {
+    width: max-content;
+    min-width: 100%;
+    text-align: right;
+}
+
+.colorLabel, .colorLabelLong {
+    text-align: center;
+}
+
+.colorInput {
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+    gap: 0.25rem;
+}
+.colorInput > input[type="range"] {
+    width: 100px;
+    margin-bottom: 8px;
+}
+.colorInput > p {
+    width: 2rem;
+    text-align: right;
+}
+
