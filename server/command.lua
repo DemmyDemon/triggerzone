@@ -8,6 +8,7 @@ local usage = {
     {"load",   "name", "Loads the named zone from disk, even if it's already loaded.",},
     {"new",    "name", "Creates a new, blank zone for editing, with that initial name."},
     {"save",   "name", "Saves the zone being edited, optionally under a new name."},
+    {"unload", "name", "Unloads the specified zone from all clients."},
 }
 
 function SendMessage(source, ...)
@@ -99,6 +100,19 @@ local function saveZone(source, args)
     TriggerClientEvent("triggerzone:save-zone", source)
 end
 
+local function unloadZone(source, args)
+    if #args == 0 then
+        SendMessage(source, "You must specify the zone to unload.")
+        return
+    end
+    if TRIGGERZONES[args[1]] then
+        TRIGGERZONES[args[1]] = nil
+    else
+        SendMessage(source, "The zone you tried to unload, " .. args[1] ..", did not exist on the server.", "Telling clients to unload it anyway, just in case.")
+    end
+    TriggerClientEvent("triggerzone:unload-zone", -1, args[1])
+end
+
 local commandVerbs = {
     cancel = cancelEdit,
     -- check = checkZone,
@@ -108,6 +122,7 @@ local commandVerbs = {
     load = loadZone,
     new  = newZone,
     save = saveZone,
+    unload = unloadZone,
 }
 
 RegisterCommand("triggerzone", function(source, args, raw)

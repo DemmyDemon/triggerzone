@@ -146,6 +146,14 @@ RegisterNetEvent('triggerzone:new-zone', function(zoneName)
     EditorStart(zoneName)
 end)
 
+RegisterNetEvent("triggerzone:unload-zone", function(zoneName)
+    if EDITING and EDITING == zoneName then
+        MessageOK("Server sent unload instruction for the zone you are editing. Oooops.")
+        EditorShutdown()
+    end
+    TRIGGERZONES[zoneName] = nil
+end)
+
 AddEventHandler('onResourceStop', function(resourceName)
     if resourceName ~= GetCurrentResourceName() then return end
     EditorShutdown()
