@@ -50,7 +50,7 @@ end)
 RegisterNUICallback('save', function(data, cb)
     if EDITING then
         TriggerLatentServerEvent('triggerzone:save-zone', 2048, EDITING, TRIGGERZONES[EDITING])
-        cb({type = "message", message="Saving to server!"})
+        cb({type = "blocker", message="Saving to server!"})
         return
     end
     cb({type = "message", message="Unexpected save request"})
@@ -126,4 +126,10 @@ RegisterNUICallback('inactiveColor', function(data, cb)
         return
     end
     cb({type = "message", message="Unexpected activeColor request"})
+end)
+
+RegisterNUICallback('unfocus', function(data, cb)
+    print('NUI Callback', 'unfocus')
+    SetNuiFocus(false, false)
+    cb({type = "ok"})
 end)

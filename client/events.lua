@@ -25,6 +25,7 @@ function MessageOK(...)
         type = 'message',
         message = msg,
     })
+    SetNuiFocus(true, true)
 end
 
 function MessageTable(...)
@@ -38,6 +39,7 @@ function MessageTable(...)
         type = 'message',
         message = msg,
     })
+    SetNuiFocus(true, true)
 end
 
 function MessageCrap(...)
@@ -50,6 +52,7 @@ function MessageCrap(...)
         type = 'message',
         message = msg,
     })
+    SetNuiFocus(true, true)
 end
 
 function MessageBlock(...)
@@ -59,9 +62,10 @@ function MessageBlock(...)
         msg = msg .. line .. '<br/>'
     end
     SendNUIMessage({
-        type = 'message',
+        type = 'blocker',
         message = msg,
     })
+    SetNuiFocus(true, true)
 end
 
 RegisterNetEvent('triggerzone:message', function(...)
