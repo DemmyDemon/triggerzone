@@ -7,7 +7,7 @@ local vertexFormat = "%0.2f"
 
 local MOVING
 
-AddTextEntry('TZEDITOR', 'Editing ~a~~n~~1~ Verices~n~Speed: ~1~%~n~~a~')
+AddTextEntry('TZEDITOR', 'Editing ~a~.tzf~n~~1~ Verices~n~Speed: ~1~%~n~~a~')
 
 local function getCam()
     if not EDITORCAM or not DoesCamExist(EDITORCAM) then
@@ -402,11 +402,12 @@ function EditorFrame()
             MOVING = idx
         else
             table.insert(zone.points, insertIdx, ray.coords.xy)
-            refresh = true
+            -- refresh = true
             if #zone.points == 1 then
                 zone.altitude = ray.coords.z - 0.05
                 SendNUIMessage({type="setAltitude", altitude=zone.altitude})
             end
+            MOVING = insertIdx
         end
     end
 
