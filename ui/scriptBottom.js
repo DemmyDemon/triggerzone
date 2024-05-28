@@ -9,6 +9,10 @@ let drawButtonElem = document.getElementById("drawButton");
 let cancelButtonElem = document.getElementById("cancel");
 let saveButtonElem = document.getElementById("save");
 
+zoneNameElem.addEventListener("keyup", (event) => {
+    glueChangeName(getZoneNameValue())
+});
+
 altitudeElem.addEventListener("change", (event) => {
     glueChangeAltitude(getAltitudeValue())
 });
