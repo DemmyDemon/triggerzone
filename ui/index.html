@@ -42,7 +42,7 @@
         <div class="topSectonWrapper">
             <h1 class="colorSectionTitle">Colors</h1>
             
-            <form id="colorForm" class="colorForm">
+            <section id="colorSection" class="colorSection">
                 <p class="colorLabel"> </p>
                 <p class="colorLabel">R</p>
                 <p class="colorLabel">G</p>
@@ -94,7 +94,7 @@
                     <p>128</p>
                 </section>
                 
-            </form>
+            </section>
         </div>
     </section>
 
@@ -102,7 +102,7 @@
     <section id="bottomSection">
         <div class="bottomSectionWrapper">
             
-            <form id="mainForm" class="mainForm">
+            <section id="mainSection" class="mainSection">
                 <section class="mainInputs">
                     <section class="mainInput">
                         <label for="zoneName">Zone name:</label>
@@ -111,12 +111,12 @@
                     
                     <section class="mainInput">
                         <label for="altitude">Altitute:</label>
-                        <input type="number" min="44" max="112" step=".01" id="altitude" name="altitude" value="54.92" />
+                        <input type="number" step=".01" id="altitude" name="altitude" value="54.92" />
                     </section>
                     
                     <section class="mainInput">
                         <label for="height">Height:</label>
-                        <input type="number" min="0" max="3" step=".01" id="height" name="height" value="2.58" />
+                        <input type="number" min="0.20" step=".01" id="height" name="height" value="2.00" />
                     </section>
                 </section>
 
@@ -136,20 +136,20 @@
                     <button id="cancel" class="buttonRed button">Cancel</button>
                     <button id="save" class="buttonGreen button">Save</button>
                 </section>
-            </form>
+            </section>
         </div>
     </section>
 
     <section id="alert" class="alertBackground hidden">
         <div class="alertWrapper">
-            <div id="alertMessage">
+            <div id="alertMessageWrapper">
                 <p>Oopsie Daisies!</p>
                 <p>It seems the gremlins in the system have had a little party and something went slightly askew.</p>
                 <p>Fear not! Our tech wizards are already on a quest to set things right. Please try again in a jiffy, or perhaps after a cup of tea.</p>
                 <p>✨ Error Code: Mischief Managed ✨</p>
             </div>
 
-            <button id="alertButton" class="buttonGreen button">Close</button>
+            <div id="alertButtonWrapper" class="alertButtonWrapper"></div>
         </div>
     </section>
 

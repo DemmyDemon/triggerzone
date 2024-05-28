@@ -1,5 +1,3 @@
-let mainFormElem = document.getElementById("mainForm");
-
 let zoneNameElem = document.getElementById("zoneName");
 let altitudeElem = document.getElementById("altitude");
 let heightElem = document.getElementById("height");
@@ -8,6 +6,7 @@ let eventButtonElem = document.getElementById("eventButton");
 let drawButtonElem = document.getElementById("drawButton");
 let cancelButtonElem = document.getElementById("cancel");
 let saveButtonElem = document.getElementById("save");
+
 
 zoneNameElem.addEventListener("keyup", (event) => {
     glueChangeName(getZoneNameValue())
@@ -23,21 +22,23 @@ heightElem.addEventListener("change", (event) => {
 
 drawButtonElem.addEventListener("change", (event) => {
     toggleBackroundColor(drawButtonElem, "green", "blue");
+    event.target.blur();
     glueChangeDraw(getDrawingValue())
 });
 
 eventButtonElem.addEventListener("change", (event) => {
     toggleBackroundColor(eventButtonElem, "green", "blue");
+    event.target.blur();
     glueChangeEvent(getEventValue())
 });
 
 cancelButtonElem.addEventListener("click", (event) => {
-    event.preventDefault();
+    event.target.blur();
     glueButtonCancel();
 });
 
 saveButtonElem.addEventListener("click", (event) => {
-    event.preventDefault();
+    event.target.blur();
     glueButtonSave();
 });
 
@@ -68,9 +69,11 @@ function setHeightValue(newHeight) {
 }
 function setEventValue(newEvent) {
     eventButtonElem.firstElementChild.checked = newEvent;
+    toggleBackroundColor(eventButtonElem, "green", "blue");
 }
 function setDrawingValue(newDrawing) {
     drawButtonElem.firstElementChild.checked = newDrawing;
+    toggleBackroundColor(drawButtonElem, "green", "blue");
 }
 
 function toggleBackroundColor(elem, checkedColor, uncheckedColor) {

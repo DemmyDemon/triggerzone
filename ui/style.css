@@ -18,6 +18,17 @@
     transition: 0.25s;
 }
 
+* ::-webkit-scrollbar {
+    width: 12px;
+}
+* ::-webkit-scrollbar-track {
+    background: var(--black);
+}
+* ::-webkit-scrollbar-thumb {
+    background-color: var(--white);
+    border-radius: 20px;
+}
+
 body {
     overflow: hidden;
     background: none;
@@ -29,6 +40,28 @@ body {
 
 h1, h2 {
     font-family: 'roboto slab', Tahoma, Geneva, Verdana, sans-seri;
+}
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+table * {
+    font-weight: lighter;
+}
+table th {
+    position: sticky;
+    top: 0;
+    font-weight: bold;
+    background-color: var(--black);
+}
+table td {
+    padding: 0.4rem 0.3rem;
+}
+
+.tableRow:hover, .tableRowClicked {
+    background-color: var(--blue);
 }
 
 
@@ -115,13 +148,12 @@ h1, h2 {
     left: 0;
     right: 0;
 
+    background-color: #0e0e0ed3;
+
     display: flex;
     justify-content: center;
     align-items: center;
 
-}
-.alertBackground {
-    background-color: #0e0e0ed3;
 }
 .alertWrapper {
     position: relative;
@@ -130,7 +162,10 @@ h1, h2 {
     padding: 0.5rem 1rem;
     border-radius: 8px;
     min-width: 20rem;
-    max-width: 33%;
+    max-width: 90%;
+    width: auto;
+    max-height: 90%;
+    overflow: hidden;
     letter-spacing: 0.1rem;
 
     display: flex;
@@ -142,7 +177,12 @@ h1, h2 {
 .alertWrapper > button {
     align-self: center;
 }
-
+#alertButtonWrapper {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
 
 
 .hidden, .hidden * {

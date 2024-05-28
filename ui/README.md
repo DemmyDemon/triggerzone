@@ -25,6 +25,11 @@ A UI for the FiveM [Triggerzone resource](https://github.com/DemmyDemon/triggerz
 
 ## **How to use**
 
+**Quick Navigation** - *ain't nobody got time for this*   
+[Functions to get values](#getFunctions)     
+[Functions to set values](#setFunctions)     
+[Other functions](#otherFunctions)     
+
 > **! Note !**  
 > In some of the examples below, I have included the getting the elements to make it clearer in case you want to create and/or use different elements.   
 > So if you are using the standard/included elements, you **do not** need to get them.
@@ -32,9 +37,8 @@ A UI for the FiveM [Triggerzone resource](https://github.com/DemmyDemon/triggerz
 ---
 ---
 
+<a name="getFunctions"></a>
 ## Functions to get values
-
----
 
 ### `getActiveRGBAAValue(RGBAAinput)`
 
@@ -166,9 +170,8 @@ var drawing = getDrawingValue();
 ---
 ---
 
+<a name="setFunctions"></a>
 ## Functions to set values
-
----
 
 ### `setActiveRGBAAValue(newRGBAA)`
 
@@ -216,7 +219,6 @@ setInactiveRGBAAValue(newColor);
 ```
 
 ---
-
 
 #### `setZoneNameValue(newZoneName)`
 
@@ -314,9 +316,9 @@ setDrawingValue(drawing);
 ---
 ---
 
-## Other functions
+<a name="otherFunctions"></a>
 
----
+## Other functions
 
 ### `populateTable(table, data)`
 
@@ -391,25 +393,35 @@ deleteButtonElem.addEventListener("click", (event) => {
 ```
 
 ---
-
-### `showModalMessage(modalElem, messageElem, message)`
+### `showModalMessage(message, buttons)`
 
 Input: 
-- `modalElem`, the modal element itself.
-- `messageElem`, the element containing the message.
-- `message`, the message.
+
+- `message`, the message, works for plain text, tables and whatever just remember to add the HTML for it.
+- `button`, an array of button/s data in an object:
+    - `color`, color of the button, choose between "Green", "Red", "Blue"
+    - `text`, the text that the button will display.
+    - `function`, what will happend when the button is clicked.
 
 Output:  
 - none
 
-The only modal (for now) is `alertElem` and it contains the `alertMessageElem`. Also, this function is used in some other functions automagicly. 
+This is the one and only modal and it is fairly customizable as you add the HTML you want and as many buttons as you need. Even if you want only one or zero buttons, you still have to include an empty array. Note! When choosing a color for the button, it *has* to be capitalized. To prevent the button/s to keeping focus after click add `event.target.blur();` to the function, as seen below.
 
 Example:
 ```js
 let alertElem = document.getElementById("alert");
-let alertMessageElem = document.getElementById("alertMessage");
 
-showModalMessage(alertElem, alertMessageElem, "this message will show in the modal.")
+let button = [{
+    color: "Green",
+    text: "Will do",
+    action: (event) => {
+        event.target.blur();
+        hideElem(alertElem);
+    }
+}];
+
+showModalMessage("<p>You need to select a row before proceeding with that action.</p>", button);
 ```
 
 ---

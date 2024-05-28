@@ -29,30 +29,16 @@
     margin: 0.5rem 0rem 0.5rem 0rem;
 }
 .table {
-    border-collapse: collapse;
     margin-bottom: 5rem;
-    width: 100%;
-}
-.table * {
-    font-weight: lighter;
-}
-.table th {
-    position: sticky;
-    top: 0;
-    background-color: var(--black);
 }
 .table td {
     text-align: right;
-    padding: 0.4rem 0.3rem;
 }
 
 .table tr > :last-child {
     padding-right: 2rem;
 }
-
-.tableRow:hover, .tableRowClicked {
-    background-color: var(--blue);
-}
+/* The rest of the table styling can be found in styles.css */
 
 .action {
     position: absolute;

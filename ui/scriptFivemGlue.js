@@ -8,6 +8,10 @@ function glueInvokeCallback(endpoint, payload){
     }).then(resp => resp.json()).then(resp => actOnData(resp));
 }
 
+function glueSpace() {
+    glueInvokeCallback('unfocus', {})
+}
+
 function glueChangeAltitude(newValue){
     glueInvokeCallback('altitude', {value:newValue})
 }
@@ -51,7 +55,20 @@ function actOnData(data){
             hideElem(alertElem);
             break;
         case "message":
-            showModalMessage(alertElem, alertMessageElem, data.message);
+            showModalMessage(data.message, [
+                {
+                    color: "Green",
+                    text: "OK",
+                    action: (event) => {
+                        hideElem(alertElem);
+                        event.target.blur();
+                        glueInvokeCallback('unfocus', {});
+                    }
+                }
+            ]);
+            break;
+        case "blocker":
+            showModalMessage(data.message, []);
             break;
         case "setName":
             setZoneNameValue(data.name);
@@ -88,12 +105,13 @@ function actOnData(data){
             setInactiveRGBAAValue(data.inactiveRGBAA);
             populateTable(tableElem, data.points);
             if (data.message) {
-                showModalMessage(alertElem, alertMessageElem, data.message);
+                showModalMessage(data.message, buttons = []);
             }
             break;
         case "abort":
             hideElem(alertElem);
             showUI(false);
+            glueInvokeCallback('unfocus', {})
             break;
         default:
             console.log(`Unknown data type "${data.type}"`, data)

@@ -1,4 +1,4 @@
-let colorFormElem = document.getElementById("colorForm");
+let colorSectionElem = document.getElementById("colorSection");
 let activeColorElems = document.getElementsByClassName("activeZoneColor");
 let inactiveColorElems = document.getElementsByClassName("inactiveZoneColor");
 
@@ -72,7 +72,7 @@ function setActiveRGBAAValue(newRGBAA) {
     for(let i = 0; i < newRGBAA.color.length; i++) {
         activeColorElems[i].value = newRGBAA.color[i];
         activeColorElems[i].nextElementSibling.innerHTML = newRGBAA.color[i];
-        console.log(i);
+        // console.log(i);
     }
     activeColorElems[3].value = newRGBAA.lines;
     activeColorElems[3].nextElementSibling.innerHTML = newRGBAA.lines;
@@ -84,7 +84,7 @@ function setInactiveRGBAAValue(newRGBAA) {
     for(let i = 0; i < newRGBAA.color.length; i++) {
         inactiveColorElems[i].value = newRGBAA.color[i];
         inactiveColorElems[i].nextElementSibling.innerHTML = newRGBAA.color[i];
-        console.log(i);
+        // console.log(i);
     }
     inactiveColorElems[3].value = newRGBAA.lines;
     inactiveColorElems[3].nextElementSibling.innerHTML = newRGBAA.lines;
