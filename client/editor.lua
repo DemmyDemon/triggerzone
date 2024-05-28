@@ -434,7 +434,7 @@ function EditorFrame()
         end
     end
 
-    if IsDisabledControlJustPressed(0, Config?.Editor?.Keys?.Focus or 22) then
+    if IsDisabledControlJustReleased(0, Config?.Editor?.Keys?.Focus or 22) then
         SetNuiFocus(true, true)
     end
 
