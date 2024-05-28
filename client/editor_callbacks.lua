@@ -101,11 +101,11 @@ end)
 RegisterNUICallback('activeColor', function(data, cb)
     if EDITING then
         TRIGGERZONES[EDITING].color.inside = {
-            data.value.color[1] or 255,
-            data.value.color[2] or 0,
-            data.value.color[3] or 0,
-            data.value.lines or 255,
-            data.value.walls or 128
+            math.floor(data.value.color[1] or 255),
+            math.floor(data.value.color[2] or 0),
+            math.floor(data.value.color[3] or 0),
+            math.floor(data.value.lines or 255),
+            math.floor(data.value.walls or 128),
         }
         cb({type = "ok"})
         return
@@ -116,11 +116,11 @@ end)
 RegisterNUICallback('inactiveColor', function(data, cb)
     if EDITING then
         TRIGGERZONES[EDITING].color.outside = {
-            data.value.color[1] or 255,
-            data.value.color[2] or 0,
-            data.value.color[3] or 0,
-            data.value.lines or 255,
-            data.value.walls or 128
+            math.floor(data.value.color[1] or 255),
+            math.floor(data.value.color[2] or 0),
+            math.floor(data.value.color[3] or 0),
+            math.floor(data.value.lines or 255),
+            math.floor(data.value.walls or 128),
         }
         cb({type = "ok"})
         return
