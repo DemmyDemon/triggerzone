@@ -163,8 +163,10 @@ local function adjustHeight(zone)
     if IsDisabledControlJustPressed(0, Config?.Editor?.Keys?.Increase or 17) then
         if IsDisabledControlPressed(0, Config?.Editor?.Keys?.Modifier or 36) then
             zone.altitude = zone.altitude + (Config?.Editor?.HeightAdjustInterval or 0.1)
+            SendNUIMessage({type="setAltitude", altitude=zone.altitude})
         else
             zone.height = math.max(zone.height + (Config?.Editor?.HeightAdjustInterval or 0.1), (Config?.Editor?.MinHeight or 0.2))
+            SendNUIMessage({type="setHeight", height=zone.height})
         end
         if zone.centroid then
             zone.labelPoint = vec3(zone.centroid.x, zone.centroid.y, zone.altitude + (zone.height/2))
@@ -173,8 +175,10 @@ local function adjustHeight(zone)
     if IsDisabledControlJustPressed(0, Config?.Editor?.Keys?.Decrease or 16) then
         if IsDisabledControlPressed(0, Config?.Editor?.Keys?.Modifier or 36) then
             zone.altitude = zone.altitude - (Config?.Editor?.HeightAdjustInterval or 0.2)
+            SendNUIMessage({type="setAltitude", altitude=zone.altitude})
         else
             zone.height = zone.height - (Config?.Editor?.HeightAdjustInterval or 0.2)
+            SendNUIMessage({type="setHeight", height=zone.height})
         end
         if zone.centroid then
             zone.labelPoint = vec3(zone.centroid.x, zone.centroid.y, zone.altitude + (zone.height/2))
