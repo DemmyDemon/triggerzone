@@ -12,7 +12,7 @@ local usage = {
 }
 
 function SendMessage(source, ...)
-    
+
     local args = {...}
     if source == 0 then
         if type(args[1]) == "table" then
@@ -124,6 +124,15 @@ local commandVerbs = {
     save = saveZone,
     unload = unloadZone,
 }
+
+function GetCommandVerbs()
+    local verbs = {}
+    for verb, _ in pairs(commandVerbs) do
+        table.insert(verbs, verb)
+    end
+    table.sort(verbs)
+    return verbs
+end
 
 RegisterCommand("triggerzone", function(source, args, raw)
     if #args == 0 then

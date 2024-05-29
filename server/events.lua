@@ -26,6 +26,7 @@ end)
 
 RegisterNetEvent('triggerzone:ready', function()
     local source = source
+    TriggerClientEvent('triggerzone:commandUsage', source, GetCommandVerbs())
     TriggerLatentClientEvent('triggerzone:addBulk', source, 1024, TRIGGERZONES)
 end)
 

@@ -162,3 +162,11 @@ AddEventHandler('onResourceStop', function(resourceName)
     if resourceName ~= GetCurrentResourceName() then return end
     EditorShutdown()
 end)
+
+RegisterNetEvent('triggerzone:commandUsage', function(verbs)
+    TriggerEvent('chat:addSuggestion', '/triggerzone', 'Interact with the triggerzone editor', {
+        {name = "verb", help = "What you want to do: " .. table.concat(verbs, ", ")},
+        {name = "zone", help = "Name of the zone you want to do it to"},
+    })
+
+end)
