@@ -4,7 +4,7 @@ local usage = {
     -- {"check",  "name", "Checks if the named zone file is valid, but does not load it."},  -- TODO: Implement check verb
     {"edit",   "name", "Puts the zone of the given name into edit mode."},
     {"help",   "",     "Gives you this lovely message!"},
-    -- {"list",   "",     "Display a list of loaded trigger zones."}, -- TODO: Implement list verb
+    {"list",   "",     "Display a list of loaded trigger zones."},
     {"load",   "name", "Loads the named zone from disk, even if it's already loaded.",},
     {"new",    "name", "Creates a new, blank zone for editing, with that initial name."},
     {"save",   "name", "Saves the zone being edited, optionally under a new name."},
@@ -61,7 +61,17 @@ local function helpMessage(source, args)
 end
 
 local function listZones(source, args)
-    -- TODO: Send something useful here XD
+    local list = { {"Name", "Label", "Verticies", "Events", "Drawn"} }
+    local numZones = 0
+    for name, zone in pairs(TRIGGERZONES) do
+        numZones += 1
+        table.insert(list, {name, zone.label, #zone.points, zone.events and "Yes" or "No", zone.draw and "Yes" or "No"})
+    end
+    if numZones > 0 then
+        SendMessage(source, list)
+    else
+        SendMessage(source, "No trigger zones are currently loaded")
+    end
 end
 
 local function loadZone(source, args)
@@ -118,7 +128,7 @@ local commandVerbs = {
     -- check = checkZone,
     edit = editZone,
     help = helpMessage,
-    -- list = listZones,
+    list = listZones,
     load = loadZone,
     new  = newZone,
     save = saveZone,
