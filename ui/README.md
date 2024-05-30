@@ -1,7 +1,9 @@
 # triggerzones-ui
 
-A UI for the FiveM [Triggerzone resource](https://github.com/DemmyDemon/triggerzone) made by [DemmyDemon](https://github.com/DemmyDemon). 
-> To be clear: This is **only the UI**. It won't work on it's own.
+A UI for the FiveM [TriggerZone resource](https://github.com/DemmyDemon/triggerzone) made by [DemmyDemon](https://github.com/DemmyDemon). FiveM is a muliplayer modification for GTA5.
+
+FiveM utilizes the Chromium Embedded Framework (CEF) to display UI and due to the unique requirements and constraints of this environment, and compatibility requirements within the game require certain compromises. Our focus is on delivering a functional and performant UI, though we always welcome feedback on how to inprove the code quality. 
+
 
 ## **Specification**
 
@@ -13,22 +15,24 @@ A UI for the FiveM [Triggerzone resource](https://github.com/DemmyDemon/triggerz
         -  Active zone of 5 values: R, G, B, A(lines) and A(walls). 
         -  Inactive zone of 5 values: R, G, B, A(lines) and A(walls).
     -  Area name  
-    -  Altitude 
+    -  Altitude
     -  Height 
     -  Drawing mode
     -  Event mode
 -  Save button 
--  Cancle button
+-  Cancel button
 -  Modal for errors/messages 
+
+> To be clear: This is **only the UI**. It won't work on it's own.
 
 ![image of resource](/screenshot.png)
 
 ## **How to use**
 
 **Quick Navigation** - *ain't nobody got time for this*   
-[Functions to get values](#getFunctions)     
-[Functions to set values](#setFunctions)     
-[Other functions](#otherFunctions)     
+→ [Functions to get values](#getFunctions)     
+→ [Functions to set values](#setFunctions)     
+→ [Other functions](#otherFunctions)     
 
 > **! Note !**  
 > In some of the examples below, I have included the getting the elements to make it clearer in case you want to create and/or use different elements.   

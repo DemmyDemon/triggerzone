@@ -9,11 +9,11 @@ let inactiveColorElems = document.getElementsByClassName("inactiveZoneColor");
 // a silly typo or so. // other dev.                            \\
 
 document.addEventListener("DOMContentLoaded", (event) => {
-    console.log("DOM fully loaded and parsed");
+    // console.log("DOM fully loaded and parsed");
 
     for(let i = 0; i < activeColorElems.length; i++) {
         activeColorElems[i].nextElementSibling.innerHTML = activeColorElems[i].value;
-        console.log("Setting inital value for activeColorElems: ", i, activeColorElems[i].value);
+        // console.log("Setting inital value for activeColorElems: ", i, activeColorElems[i].value);
 
         activeColorElems[i].addEventListener("mousedown", (event) => {
             
@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
     for(let i = 0; i < inactiveColorElems.length; i++) {
         inactiveColorElems[i].nextElementSibling.innerHTML = inactiveColorElems[i].value;
-        console.log("Setting inital value for inactiveColorElems: ", i, inactiveColorElems[i].value);
+        // console.log("Setting inital value for inactiveColorElems: ", i, inactiveColorElems[i].value);
 
         inactiveColorElems[i].addEventListener("mousedown", (event) => {
             
