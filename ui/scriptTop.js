@@ -2,6 +2,12 @@ let colorSectionElem = document.getElementById("colorSection");
 let activeColorElems = document.getElementsByClassName("activeZoneColor");
 let inactiveColorElems = document.getElementsByClassName("inactiveZoneColor");
 
+// Note to dev: if the issue with the RGBAA colors not updating \\
+// it seems to be something about the eventlisteners as they    \\
+// don't seems to be added at all sometimes. I haven't figured  \\
+// out why yet. But if works from now on, I'll assume it where  \\
+// a silly typo or so. // other dev.                            \\
+
 document.addEventListener("DOMContentLoaded", (event) => {
     console.log("DOM fully loaded and parsed");
 
@@ -11,10 +17,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         activeColorElems[i].addEventListener("mousedown", (event) => {
             
-            console.log("activeColorElems["+i+"], eventlistener on mousedown");
+            // console.log("activeColorElems["+i+"], eventlistener on mousedown");
             activeColorElems[i].addEventListener("mousemove", (event) => {
                 
-                console.log("activeColorElems["+i+"], eventlistener on mousemove: ", i, activeColorElems[i].value);
+                // console.log("activeColorElems["+i+"], eventlistener on mousemove: ", i, activeColorElems[i].value);
                 
                 activeColorElems[i].nextElementSibling.innerHTML = activeColorElems[i].value;
                 glueChangeActiveColor(getActiveRGBAAValue())
@@ -28,10 +34,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 
         inactiveColorElems[i].addEventListener("mousedown", (event) => {
             
-            console.log("inactiveColorElems["+i+"], eventlistener on mousedown");
+            // console.log("inactiveColorElems["+i+"], eventlistener on mousedown");
             inactiveColorElems[i].addEventListener("mousemove", (event) => {
                 
-                console.log("inactiveColorElems["+i+"], eventlistener on mousemove: ", i, inactiveColorElems[i].value);
+                // console.log("inactiveColorElems["+i+"], eventlistener on mousemove: ", i, inactiveColorElems[i].value);
 
                 inactiveColorElems[i].nextElementSibling.innerHTML = inactiveColorElems[i].value;
                 glueChangeInactiveColor(getInactiveRGBAAValue())
@@ -49,7 +55,7 @@ function getActiveRGBAAValue() {
     }
 
     for(let i = 0; i < activeColorElems.length; i++){
-        console.log("getActiveRGBAAValue(), activeColorElems[i].value: ", i, activeColorElems[i].value);
+        // console.log("getActiveRGBAAValue(), activeColorElems[i].value: ", i, activeColorElems[i].value);
         if (i < 3) {
             RGBAAvalues.color.push(activeColorElems[i].value);
         } else if (i == 3) {
@@ -57,10 +63,10 @@ function getActiveRGBAAValue() {
         } else if (i == 4) {
             RGBAAvalues.walls = activeColorElems[i].value;
         } else {
-            console.log("Something odd is happening in the [getActiveRGBAAValue] function, the index is: ", i);
+            // console.log("Something odd is happening in the [getActiveRGBAAValue] function, the index is: ", i);
         }
     }
-    console.log("getActiveRGBAAValue(), returns: ",  RGBAAvalues.color[0],RGBAAvalues.color[1],RGBAAvalues.color[2],RGBAAvalues.lines,RGBAAvalues.walls);
+    // console.log("getActiveRGBAAValue(), returns: ",  RGBAAvalues.color[0],RGBAAvalues.color[1],RGBAAvalues.color[2],RGBAAvalues.lines,RGBAAvalues.walls);
     return RGBAAvalues;
 }
 function getInactiveRGBAAValue() {
@@ -71,7 +77,7 @@ function getInactiveRGBAAValue() {
     }
 
     for(let i = 0; i < inactiveColorElems.length; i++){
-        console.log("getInactiveRGBAAValue(), inactiveColorElems[i].value: ", i, inactiveColorElems[i].value);
+        // console.log("getInactiveRGBAAValue(), inactiveColorElems[i].value: ", i, inactiveColorElems[i].value);
         if (i < 3) {
             RGBAAvalues.color.push(inactiveColorElems[i].value);
         } else if (i == 3) {
@@ -79,15 +85,15 @@ function getInactiveRGBAAValue() {
         } else if (i == 4) {
             RGBAAvalues.walls = inactiveColorElems[i].value;
         } else {
-            console.log("Something odd is happening in the [getInactiveRGBAAValue] function, the index is: ", i);
+            // console.log("Something odd is happening in the [getInactiveRGBAAValue] function, the index is: ", i);
         }
     }
-    console.log("getInactiveRGBAAValue(), returns: ",  RGBAAvalues.color[0],RGBAAvalues.color[1],RGBAAvalues.color[2],RGBAAvalues.lines,RGBAAvalues.walls);
+    // console.log("getInactiveRGBAAValue(), returns: ",  RGBAAvalues.color[0],RGBAAvalues.color[1],RGBAAvalues.color[2],RGBAAvalues.lines,RGBAAvalues.walls);
     return RGBAAvalues;
 }
 
 function setActiveRGBAAValue(newRGBAA) {
-    console.log("setActiveRGBAAValue(), newRGBAA: ", newRGBAA.color[0],newRGBAA.color[1],newRGBAA.color[2],newRGBAA.lines,newRGBAA.walls);
+    // console.log("setActiveRGBAAValue(), newRGBAA: ", newRGBAA.color[0],newRGBAA.color[1],newRGBAA.color[2],newRGBAA.lines,newRGBAA.walls);
     for(let i = 0; i < newRGBAA.color.length; i++) {
         activeColorElems[i].value = newRGBAA.color[i];
         activeColorElems[i].nextElementSibling.innerHTML = newRGBAA.color[i];
@@ -99,7 +105,7 @@ function setActiveRGBAAValue(newRGBAA) {
     activeColorElems[4].nextElementSibling.innerHTML = newRGBAA.walls;
 }
 function setInactiveRGBAAValue(newRGBAA) {
-    console.log("setInactiveRGBAAValue(), newRGBAA: ", newRGBAA.color[0],newRGBAA.color[1],newRGBAA.color[2],newRGBAA.lines,newRGBAA.walls);
+    // console.log("setInactiveRGBAAValue(), newRGBAA: ", newRGBAA.color[0],newRGBAA.color[1],newRGBAA.color[2],newRGBAA.lines,newRGBAA.walls);
     for(let i = 0; i < newRGBAA.color.length; i++) {
         inactiveColorElems[i].value = newRGBAA.color[i];
         inactiveColorElems[i].nextElementSibling.innerHTML = newRGBAA.color[i];
