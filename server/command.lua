@@ -61,11 +61,11 @@ local function helpMessage(source, args)
 end
 
 local function listZones(source, args)
-    local list = { {"Name", "Label", "Verticies", "Events", "Drawn"} }
+    local list = { {"Name", "Label", "Verticies", "Events", "Drawn", "Origin"} }
     local numZones = 0
     for name, zone in pairs(TRIGGERZONES) do
         numZones += 1
-        table.insert(list, {name, zone.label, #zone.points, zone.events and "Yes" or "No", zone.draw and "Yes" or "No"})
+        table.insert(list, {name, zone.label, #zone.points, zone.events and "Yes" or "No", zone.draw and "Yes" or "No", zone.origin})
     end
     if numZones > 0 then
         SendMessage(source, list)
