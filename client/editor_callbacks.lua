@@ -31,7 +31,7 @@ end)
 
 RegisterNUICallback('event', function(data, cb)
     if EDITING then
-        TRIGGERZONES[EDITING].event = (data.value or false)
+        TRIGGERZONES[EDITING].events = (data.value or false)
         cb({type = "ok"})
         return
     end
