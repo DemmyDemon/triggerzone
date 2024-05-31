@@ -82,7 +82,6 @@ function Store(name, zone, resource)
     end
     resource = resource or GetCurrentResourceName()
     name = KeyFromFilename(UniformZoneFilename(name))
-    print('Events: ', zone.events)
     local data = msgpack.pack({
         label = zone.label or name,
         origin = resource,

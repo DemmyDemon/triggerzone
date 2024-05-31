@@ -1,7 +1,7 @@
 RegisterNUICallback('altitude', function(data, cb)
     if EDITING then
         TRIGGERZONES[EDITING].altitude = data.value
-        cb({type = "ok"})
+        cb({type = "noop"})
         return
     end
     cb({type = "message", message="Unexpected altitude setting"})
@@ -11,7 +11,7 @@ RegisterNUICallback('height', function(data, cb)
     if EDITING then
         if data.value >= (Config?.Editor?.MinHeight or 0.2)  then
             TRIGGERZONES[EDITING].height = data.value
-            cb({type = "ok"})
+            cb({type = "noop"})
         else
             cb({type="message", message="Minimum height is " .. Config.Editor.MinHeight })
         end
@@ -23,7 +23,7 @@ end)
 RegisterNUICallback('draw', function(data, cb)
     if EDITING then
         TRIGGERZONES[EDITING].draw = (data.value or false)
-        cb({type = "ok"})
+        cb({type = "noop"})
         return
     end
     cb({type = "message", message="Unexpected draw setting"})
@@ -32,7 +32,7 @@ end)
 RegisterNUICallback('event', function(data, cb)
     if EDITING then
         TRIGGERZONES[EDITING].events = (data.value or false)
-        cb({type = "ok"})
+        cb({type = "noop"})
         return
     end
     cb({type = "message", message="Unexpected event setting"})
@@ -41,7 +41,7 @@ end)
 RegisterNUICallback('name', function(data, cb)
     if EDITING then
         TRIGGERZONES[EDITING].label = data.value
-        cb({type = "ok"})
+        cb({type = "noop"})
         return
     end
     cb({type = "message", message="Unexpected name setting"})
@@ -70,7 +70,7 @@ end)
 RegisterNUICallback('view', function(data, cb)
     if EDITING then
         EditorViewVertex(data.vertex)
-        cb({type = "ok"})
+        cb({type = "noop"})
         return
     end
     cb({type = "message", message="Unexpected view request"})
@@ -108,7 +108,7 @@ RegisterNUICallback('activeColor', function(data, cb)
             math.floor(data.value.lines or 255),
             math.floor(data.value.walls or 128),
         }
-        cb({type = "ok"})
+        cb({type = "noop"})
         return
     end
     cb({type = "message", message="Unexpected activeColor request"})
@@ -123,7 +123,7 @@ RegisterNUICallback('inactiveColor', function(data, cb)
             math.floor(data.value.lines or 255),
             math.floor(data.value.walls or 128),
         }
-        cb({type = "ok"})
+        cb({type = "noop"})
         return
     end
     cb({type = "message", message="Unexpected activeColor request"})

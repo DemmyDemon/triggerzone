@@ -50,6 +50,8 @@ function glueChangeInactiveColor(newValue){
 
 function actOnData(data){
     switch (data.type){
+        case "noop":
+            break;
         case "ok":
             hideElem(alertElem);
             break;

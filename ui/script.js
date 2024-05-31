@@ -21,7 +21,7 @@ window.addEventListener("keyup", (event) => {
 
 function hideElem(elem) {
     elem.className = "hidden";
-    console.log(`Element [${elem}] is now hidden.`);
+    // console.log(`Element [${elem}] is now hidden.`);
 }
 
 function showElem(elem) {
