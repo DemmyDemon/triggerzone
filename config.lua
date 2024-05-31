@@ -1,4 +1,5 @@
 Config = {
+    SendRate = 5120,
     Editor = {
         BoostFactor = 10.0,
         Sensitivity = 5.0,

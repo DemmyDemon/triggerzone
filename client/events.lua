@@ -159,8 +159,19 @@ RegisterNetEvent("triggerzone:unload-zone", function(zoneName)
 end)
 
 AddEventHandler('onResourceStop', function(resourceName)
-    if resourceName ~= GetCurrentResourceName() then return end
-    EditorShutdown()
+    if resourceName == GetCurrentResourceName() then
+        EditorShutdown()
+    end
+
+    for name, zone in pairs(TRIGGERZONES) do
+        if zone.origin == resourceName then
+            if name == EDITING then
+                EditorShutdown()
+                MessageCrap("The origin resource for the zone you were editing was stopped!")
+            end
+            TRIGGERZONES[name] = nil
+        end
+    end
 end)
 
 RegisterNetEvent('triggerzone:commandUsage', function(verbs)

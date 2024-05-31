@@ -27,13 +27,13 @@ end)
 RegisterNetEvent('triggerzone:ready', function()
     local source = source
     TriggerClientEvent('triggerzone:commandUsage', source, GetCommandVerbs())
-    TriggerLatentClientEvent('triggerzone:addBulk', source, 1024, TRIGGERZONES)
+    TriggerLatentClientEvent('triggerzone:addBulk', source, Config?.SendRate or 5120, TRIGGERZONES)
 end)
 
 RegisterNetEvent('triggerzone:resend', function(name)
     local source = source
     if TRIGGERZONES[name] then
-        TriggerLatentClientEvent('triggerzone:add', source, 1024, name, TRIGGERZONES[name])
+        TriggerLatentClientEvent('triggerzone:add', source, Config?.SendRate or 5120, name, TRIGGERZONES[name])
         return
     end
     CloseBlocker(source)
@@ -47,4 +47,15 @@ RegisterNetEvent('triggerzone:save-zone', function(name, data)
     end
     Set(name, data)
     Store(name, data)
+end)
+
+AddEventHandler('onResourceStop', function(resourceName)
+    if resourceName == GetCurrentResourceName() then
+        return -- No need to do any extra work, as they'll all get forgotten really soon ;)
+    end
+    for name, zone in pairs(TRIGGERZONES) do
+        if zone.origin == resourceName then
+            TRIGGERZONES[name] = nil
+        end
+    end
 end)
