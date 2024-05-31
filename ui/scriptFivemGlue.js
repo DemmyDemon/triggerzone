@@ -49,7 +49,6 @@ function glueChangeInactiveColor(newValue){
 }
 
 function actOnData(data){
-    console.log(`Processing data type "${data.type}"`)
     switch (data.type){
         case "ok":
             hideElem(alertElem);
@@ -89,11 +88,9 @@ function actOnData(data){
             populateTable(tableElem, data.points);
             break;
         case "setActiveRGBAA":
-            console.log("actOnData(), setActiveRGBAA, returns: ",  data.activeRGBAA.color[0],data.activeRGBAA.color[1],data.activeRGBAA.color[2],data.activeRGBAA.lines,data.activeRGBAA.walls);
             setActiveRGBAAValue(data.activeRGBAA);
             break;
         case "setInactiveRGBAA":
-            console.log("actOnData(), setInactiveRGBAA, returns: ",  data.inactiveRGBAA.color[0],data.inactiveRGBAA.color[1],data.inactiveRGBAA.color[2],data.inactiveRGBAA.lines,data.inactiveRGBAA.walls);
             setInactiveRGBAAValue(data.inactiveRGBAA);
             break;
         case "loaded":

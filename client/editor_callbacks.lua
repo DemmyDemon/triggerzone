@@ -130,7 +130,6 @@ RegisterNUICallback('inactiveColor', function(data, cb)
 end)
 
 RegisterNUICallback('unfocus', function(data, cb)
-    print('NUI Callback', 'unfocus')
     SetNuiFocus(false, false)
     cb({type = "ok"})
 end)
