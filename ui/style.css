@@ -46,6 +46,7 @@ h1, h2 {
 table {
     border-collapse: collapse;
     width: 100%;
+
 }
 table * {
     font-weight: lighter;
@@ -61,10 +62,12 @@ table td {
     padding: 0.4rem 0.3rem;
 }
 
-.tableRow:hover, .tableRowClicked {
+table tr:hover, .tableRow:hover, .tableRowClicked {
     background-color: var(--blue);
 }
-
+#alertMessageWrapper > table * {
+    border: 1px solid var(--blue);
+}
 
 .buttonRed {
     padding: 0.5rem 1.5rem;
