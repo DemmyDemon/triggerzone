@@ -19,8 +19,8 @@ Citizen.CreateThread(function()
                     if not zone.triggered then
                         zone.triggered = true
                         if zone.events then
-                            TriggerEvent('triggerzone:enter', name)
-                            TriggerServerEvent('triggerzone:enter', name)
+                            TriggerEvent('triggerzone:enter', name, zone.label)
+                            TriggerServerEvent('triggerzone:enter', name, zone.label)
                         end
                     end
                     if zone.draw or EDITING == name then
@@ -30,8 +30,8 @@ Citizen.CreateThread(function()
                     if zone.triggered then
                         zone.triggered = false
                         if zone.events then
-                            TriggerEvent('triggerzone:exit', name)
-                            TriggerServerEvent('triggerzone:exit', name)
+                            TriggerEvent('triggerzone:exit', name, zone.label)
+                            TriggerServerEvent('triggerzone:exit', name, zone.label)
                         end
                     end
                     if zone.draw or EDITING == name then
