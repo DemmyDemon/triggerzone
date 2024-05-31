@@ -146,8 +146,7 @@ end
 
 RegisterCommand("triggerzone", function(source, args, raw)
     if #args == 0 then
-        SendMessage(source, table.unpack(usage))
-        return
+        args = {"help"}
     end
 
     local verb = table.remove(args, 1):lower()
