@@ -55,6 +55,7 @@ table th {
     top: 0;
     font-weight: bold;
     background-color: var(--black);
+    padding: 0.4rem 0.3rem;
 }
 table td {
     padding: 0.4rem 0.3rem;
