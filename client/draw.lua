@@ -31,6 +31,10 @@ function DrawZone(name, zone, color, edit)
         return
     end
 
+    if zone.radius and zone.labelPoint and not IsSphereVisible(zone.labelPoint.x, zone.labelPoint.y, zone.labelPoint.z, zone.radius) then
+        return
+    end
+
     local r = color[1] or 255
     local g = color[2] or 0
     local b = color[3] or 0
