@@ -69,7 +69,8 @@ end)
 
 RegisterNUICallback('view', function(data, cb)
     if EDITING then
-        cb({type = "message", message="NOT IMPLEMENTED"}) -- TODO: Implment view NUI callback
+        EditorViewVertex(data.vertex)
+        cb({type = "ok"})
         return
     end
     cb({type = "message", message="Unexpected view request"})

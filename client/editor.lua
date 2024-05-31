@@ -4,7 +4,7 @@ local TARGETBLIP = 0
 local ZERO = vector3(0,0,0)
 local SPEED = Config.Editor?.Speed?.Start or 10
 local vertexFormat = "%0.2f"
-
+local VIEW = false
 local MOVING
 
 AddTextEntry('TZEDITOR', 'Editing ~a~.tzf~n~~1~ Verices~n~Speed: ~1~%~n~~a~')
@@ -74,6 +74,20 @@ function EditorStart(zoneName)
         points = MakeUiPoints(zone.points)
     })
 
+end
+
+function EditorViewVertex(index)
+    if not EDITING then return end
+    if index > #TRIGGERZONES[EDITING].points then print("Can't view:  vertex", index, "is out of bounds", #TRIGGERZONES[EDITING].points) return end
+    local point = TRIGGERZONES[EDITING].points[index]
+    local pointZ = TRIGGERZONES[EDITING].altitude + (TRIGGERZONES[EDITING].height/2)
+    local centroid = TRIGGERZONES[EDITING].centroid
+    local centroidZ = TRIGGERZONES[EDITING].altitude + (TRIGGERZONES[EDITING].height*2)
+
+    local cam = getCam()
+    SetCamCoord(cam, centroid.x, centroid.y, centroidZ)
+    PointCamAtCoord(cam, point.x, point.y, pointZ)
+    VIEW = true
 end
 
 local function fiddleWithMinimap(location, rotation, ray)
@@ -197,7 +211,16 @@ local function moveCamera()
     local frameTime = GetFrameTime()
     local cam = getCam()
 
+    local location = GetCamCoord(cam)
     local rotation = GetCamRot(cam,2)
+
+    if VIEW then -- When using the VIEW function, suppress movement for one frame.
+        VIEW = false
+        Citizen.Wait(0)
+        StopCamPointing(cam)
+        return location, rotation
+    end
+
     rotation = rotation + getMouseMovement()
     if rotation.x > 85 then
         rotation = vector3(85, rotation.y, rotation.z)
@@ -207,7 +230,6 @@ local function moveCamera()
     ---@diagnostic disable-next-line: missing-parameter,param-type-mismatch vector3 expands to three numbers.
     SetCamRot(cam, rotation, 2)
 
-    local location = GetCamCoord(cam)
     local newLocation = getMovementInput(location, rotation, frameTime)
     ---@diagnostic disable-next-line: missing-parameter,param-type-mismatch vector3 expands to three numbers.
     SetCamCoord(cam, newLocation)
