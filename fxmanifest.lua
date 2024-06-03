@@ -3,7 +3,7 @@ game 'gta5'
 name 'triggerzone'
 provides 'triggerzone'
 description 'Fancy little zone entry/exit trigger script'
-version '0.0.1'
+version '0.5.0'
 lua54 'yes'
 shared_scripts { 'config.lua', 'shared/*.lua' }
 server_scripts { 'server/*.lua', 'server/file_list.js' }
