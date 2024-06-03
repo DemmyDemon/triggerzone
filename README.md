@@ -156,6 +156,10 @@ When an arguemnt is "resource", it can be omitted. It will assume you mean the r
 
 TODO: GetLoadedZones example code.
 
+## GetZoneFilenames
+
+TODO: GetZoneFilenames example code.
+
 ## GetZoneLabel
 
 TODO: GetZoneLabel example code.
