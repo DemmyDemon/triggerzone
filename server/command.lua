@@ -1,14 +1,14 @@
 local usage = {
-    {"Verb",   "Arg",  "Function"},
-    {"cancel", "",     "Cancel the current edit, discarding all changes since last save."},
-    {"check",  "name", "Checks if the named zone file is valid, but does not load it."},
-    {"edit",   "name", "Puts the zone of the given name into edit mode."},
-    {"help",   "",     "Gives you this lovely message!"},
-    {"list",   "",     "Display a list of loaded trigger zones."},
-    {"load",   "name", "Loads the named zone from disk, even if it's already loaded.",},
-    {"new",    "name", "Creates a new, blank zone for editing, with that initial name."},
-    {"save",   "",     "Saves the zone being edited"},
-    {"unload", "name", "Unloads the specified zone from all clients."},
+    {"Verb",   "Arguments",     "Function"},
+    {"cancel", "",              "Cancel the current edit, discarding all changes since last save."},
+    {"check",  "name resource", "Checks if the named zone file is valid, but does not load it."},
+    {"edit",   "name",          "Puts the zone of the given name into edit mode."},
+    {"help",   "",              "Gives you this lovely message!"},
+    {"list",   "",              "Display a list of loaded trigger zones."},
+    {"load",   "name resource", "Loads the named zone from disk, even if it's already loaded.",},
+    {"new",    "name",          "Creates a new, blank zone for editing, with that initial name."},
+    {"save",   "",              "Saves the zone being edited."},
+    {"unload", "name",          "Unloads the specified zone from all clients."},
 }
 
 function SendMessage(source, ...)
@@ -115,11 +115,18 @@ local function listZones(source, args)
 end
 
 local function loadZone(source, args)
-    if #args ~= 1 then
+    if #args == 0 then
         SendMessage(0, "When loading a zone, you must specify it's filename.")
         return
     end
-    Load(args[1])
+
+    local resource = args[2] or GetCurrentResourceName()
+    if not IsValidResource(resource) then
+        SendMessage(source, "The resource you specified does not exist.")
+        return
+    end
+
+    Load(args[1], resource)
 end
 
 local function newZone(source, args)
