@@ -132,6 +132,58 @@ TODO: Editor screenshot goes here.
 
 TODO: Legend of above screenshot goes here.
 
+# Exported functions
+
+These are the functions you can use from your own resource, and what they do.
+
+| Name              | Where  | Arguments                | Intended use                                                             |
+|-------------------|--------|--------------------------|--------------------------------------------------------------------------|
+| GetLoadedZones    | Server |                          | Get a list of loaded zones, and their associated resource of origin.     |
+| GetZoneFilenames  | Server | resource                 | Get a list of .tzf files in the zones/ directory of the given resource.  |
+| GetZoneLabel      | Shared | zoneName                 | Get the label for the zone of the given name.                            |
+| GetZonesAtPoint   | Shared | point                    | Get a list of zones that overlap with the given vector3 point.           |
+| IsPointInsideZone | Shared | point, zoneName          | Check if the given vector3 point is inside the zone with the given name. |
+| Load              | Server | filename, resource       | Load zone data, and set the zone.                                        |
+| LoadZoneFile      | Server | filename, resource       | Load zone data, but don't actually set the zone.                         |
+| Set               | Server | name, zoneData, resource | Set a zone from raw data.                                                |
+| Store             | Server | name, zoneData, resource | Store the zone data to a file who's name is derived from the given name. |
+
+"Shared" means it's both on the client and the server.  Server obviously means it's only available from the server.
+
+When an arguemnt is "resource", it can be omitted. It will assume you mean the resource you are calling the function from.
+
+## GetLoadedZones
+
+TODO: GetLoadedZones example code.
+
+## GetZoneLabel
+
+TODO: GetZoneLabel example code.
+
+## GetZonesAtPoint
+
+TODO: GetZonesAtPoint example code.
+
+## IsPointInsideZone
+
+TODO: IsPointInsideZone example code.
+
+## Load
+
+TODO: Load example code.
+
+## LoadZoneFile
+
+TODO: LoadZoneFile example code.
+
+## Set
+
+TODO: Set example code.
+
+## Store
+
+TODO: Store example code.
+
 # Configuration file
 
 There is a `config.lua`, and there should *probably* be some documentation related to it at some point.
