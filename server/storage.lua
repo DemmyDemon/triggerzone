@@ -16,7 +16,7 @@ function KeyFromFilename(name)
     return name
 end
 
-local function isValidResource(resource)
+function IsValidResource(resource)
     if not resource or resource == "" then
         return false
     end
@@ -31,7 +31,7 @@ TRIGGERZONES = {}
 
 function Set(name, zoneData, resource)
     resource = resource or zoneData.origin
-    if not isValidResource(resource) then
+    if not IsValidResource(resource) then
         resource = GetInvokingResource()
     end
     resource = resource or GetCurrentResourceName()
@@ -54,30 +54,49 @@ function Set(name, zoneData, resource)
 end
 exports("Set", Set)
 
-function Load(filename, resource)
+function LoadZoneFile(filename, resource)
     resource = resource or GetInvokingResource()
     resource = resource or GetCurrentResourceName()
+
     filename = ZonesDirFile(filename)
     local name = KeyFromFilename(UniformZoneFilename(filename))
+
+    if not IsValidResource(resource) then
+        return false, ("Failed to load %s:%s: Invalid resource"):format(resource, filename), {}
+    end
+
     local data = LoadResourceFile(resource, filename)
     if not data then
-        print(('Failed to load any data from %s/%s:  Does the file even exist?'):format(resource, filename))
-        return
+        return false, ("Failed to load any data from %s/%s:  Does the file even exist?"):format(resource, filename), {}
     end
     local success, zone = pcall(msgpack.unpack,data)
     if not success then
-        print(('Failed to load %s/%s: %s'):format(resource, filename, zone))
-        return
+        return false, ("Failed to load %s/%s: %s"):format(resource, filename, zone), {}
     end
     zone.origin = resource
-    print(('Successfully loaded %s/%s'):format(resource, filename))
+
+    return true, name, zone
+end
+exports("LoadZoneFile", LoadZoneFile)
+
+function Load(filename, resource)
+    resource = resource or GetInvokingResource()
+    resource = resource or GetCurrentResourceName()
+
+    local success, name, zone = LoadZoneFile(filename, resource)
+    if not success then
+        print(name)
+        return
+    end
+    print(("Successfully loaded %s/%s"):format(resource, filename))
+
     Set(name, zone)
 end
 exports("Load", Load)
 
 function Store(name, zone, resource)
     resource = resource or zone.origin
-    if not isValidResource(resource) then
+    if not IsValidResource(resource) then
         resource = GetInvokingResource()
     end
     resource = resource or GetCurrentResourceName()

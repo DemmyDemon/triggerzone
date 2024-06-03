@@ -1,13 +1,13 @@
 local usage = {
     {"Verb",   "Arg",  "Function"},
     {"cancel", "",     "Cancel the current edit, discarding all changes since last save."},
-    -- {"check",  "name", "Checks if the named zone file is valid, but does not load it."},  -- TODO: Implement check verb
+    {"check",  "name", "Checks if the named zone file is valid, but does not load it."},
     {"edit",   "name", "Puts the zone of the given name into edit mode."},
     {"help",   "",     "Gives you this lovely message!"},
     {"list",   "",     "Display a list of loaded trigger zones."},
     {"load",   "name", "Loads the named zone from disk, even if it's already loaded.",},
     {"new",    "name", "Creates a new, blank zone for editing, with that initial name."},
-    {"save",   "name", "Saves the zone being edited, optionally under a new name."},
+    {"save",   "",     "Saves the zone being edited"},
     {"unload", "name", "Unloads the specified zone from all clients."},
 }
 
@@ -33,7 +33,47 @@ function CloseBlocker(source)
 end
 
 local function checkZone(source, args)
-    -- TODO: Read file and see that it loads properly, but *DO NOT* send to clients or add to TRIGGERZONE table.
+    if #args == 0 then
+        SendMessage(source, "You must specify the file to check.")
+        return
+    end
+
+    local resource = args[2] or GetCurrentResourceName()
+    if not IsValidResource(resource) then
+        SendMessage(source, "The resource you specified does not exist.")
+        return
+    end
+
+    local success, name, zone = LoadZoneFile(args[1], resource)
+    if not success then
+        SendMessage(source, name)
+        return
+    end
+
+    local zoneData = {{"Key", "Value"}}
+    for key, value in pairs(zone) do
+        if key == "points" then
+            table.insert(zoneData, {key, ("%i verticies"):format(#value)})
+        elseif key == "color" then
+            table.insert(zoneData, {"Color (active)", ("RGB:(%i, %i, %i), Lines: %i, Walls: %i"):format(
+                zone.color?.inside?[1] or -1,
+                zone.color?.inside?[2] or -1,
+                zone.color?.inside?[3] or -1,
+                zone.color?.inside?[4] or -1,
+                zone.color?.inside?[5] or -1
+            )})
+            table.insert(zoneData, {"Color (inactive)", ("RGB:(%i, %i, %i), Lines: %i, Walls: %i"):format(
+                zone.color?.outside?[1] or -1,
+                zone.color?.outside?[2] or -1,
+                zone.color?.outside?[3] or -1,
+                zone.color?.outside?[4] or -1,
+                zone.color?.outside?[5] or -1
+            )})
+        else
+            table.insert(zoneData, {key, ("%s"):format(value)})
+        end
+    end
+    SendMessage(source, zoneData)
 end
 
 local function cancelEdit(source, args)
@@ -125,7 +165,7 @@ end
 
 local commandVerbs = {
     cancel = cancelEdit,
-    -- check = checkZone,
+    check = checkZone,
     edit = editZone,
     help = helpMessage,
     list = listZones,
