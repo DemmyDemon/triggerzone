@@ -15,7 +15,7 @@ There is [a tutorial](tutorial/index.md) that walks you through creating your fi
 ## Loading zones
 
 Zones are stored in .tzf files. Trigger Zone File. These are [messagepack](https://github.com/citizenfx/lua-cmsgpack/) encoded Lua tables.  
-Usually, you will load these from the code of your own resource, more on that in the exports section, but you can manually load them using a command.  Of course, this *can* be done in your server.cfg, or similar, so it doesn't have to be a problem.
+Usually, you will load these from the code of your own resource, more on that in [the exports section](#exported-functions), but you can manually load them using a command.  Of course, this *can* be done in your server.cfg, or similar, so it doesn't have to be a problem.
 
 It is recommended to load your zones from your code.
 
