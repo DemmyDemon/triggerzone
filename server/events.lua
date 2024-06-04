@@ -6,8 +6,11 @@ RegisterNetEvent('triggerzone:enter', function(name)
     end
     local pedLoc = GetEntityCoords(GetPlayerPed(source))
     if not IsInside(pedLoc, TRIGGERZONES[name]) then
-        print(GetPlayerName(source) .. " claims to have entered triggerzone " .. name ..", but this could not be confirmed.")
-        return
+        Citizen.Wait(100)
+        pedLoc = GetEntityCoords(GetPlayerPed(source))
+        if not IsInside(pedLoc, TRIGGERZONES[name]) then
+            print(GetPlayerName(source) .. " claims to have entered triggerzone " .. name ..", but this could not be confirmed.")
+        end
     end
 end)
 
@@ -19,8 +22,11 @@ RegisterNetEvent('triggerzone:exit', function(name)
     end
     local pedLoc = GetEntityCoords(GetPlayerPed(source))
     if IsInside(pedLoc, TRIGGERZONES[name]) then
-        print(GetPlayerName(source) .. " claims to have left triggerzone " .. name ..", but this could not be confirmed.")
-        return
+        Citizen.Wait(100)
+        pedLoc = GetEntityCoords(GetPlayerPed(source))
+        if IsInside(pedLoc, TRIGGERZONES[name]) then
+            print(GetPlayerName(source) .. " claims to have left triggerzone " .. name ..", but this could not be confirmed.")
+        end
     end
 end)
 
