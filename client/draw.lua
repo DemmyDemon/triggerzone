@@ -31,7 +31,12 @@ function DrawZone(name, zone, color, edit)
         return
     end
 
-    if zone.radius and zone.labelPoint and not IsSphereVisible(zone.labelPoint.x, zone.labelPoint.y, zone.labelPoint.z, zone.radius) then
+    if
+        not edit
+        and zone.radius
+        and zone.labelPoint
+        and not IsSphereVisible(zone.labelPoint.x, zone.labelPoint.y, zone.labelPoint.z, zone.radius)
+    then
         return
     end
 
