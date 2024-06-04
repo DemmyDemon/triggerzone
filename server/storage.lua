@@ -86,11 +86,10 @@ function Load(filename, resource)
     local success, name, zone = LoadZoneFile(filename, resource)
     if not success then
         print(name)
-        return
+        return false
     end
     print(("Successfully loaded %s/%s"):format(resource, filename))
-
-    Set(name, zone)
+    return Set(name, zone)
 end
 exports("Load", Load)
 
@@ -116,8 +115,10 @@ function Store(name, zone, resource)
     local filename = ZonesDirFile(UniformZoneFilename(name))
     if SaveResourceFile(resource, filename, data, size) then
         print(('Successfully stored %s/%s (%d bytes) '):format(resource, filename, size))
+        return true, filename, size
     else
         print(('Failed to store %s/%s -> Does the zones directory exist?'):format(resource, filename))
+        return false, filename, 0
     end
 end
 exports("Store", Store)
