@@ -7,7 +7,7 @@ local vertexFormat = "%0.2f"
 local VIEW = false
 local MOVING
 
-AddTextEntry('TZEDITOR', 'Editing ~a~.tzf~n~~1~ Verices~n~Speed: ~1~%~n~~a~')
+AddTextEntry('TZEDITOR', 'Editing ~a~.tzf~n~~1~ Vertices~n~Speed: ~1~%~n~~a~')
 
 local function getCam()
     if not EDITORCAM or not DoesCamExist(EDITORCAM) then
