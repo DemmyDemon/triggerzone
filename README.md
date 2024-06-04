@@ -292,39 +292,180 @@ When an arguemnt is "resource", it can be omitted. It will assume you mean the r
 
 ## GetLoadedZones
 
-TODO: GetLoadedZones example code.
+```lua
+local zoneTable = exports.triggerzone:GetLoadedZones()
+for zoneName, originResource in pairs(zoneTable) do
+    print(zoneName, originResource)
+end
+```
+
+Takes no arguments.
+Returns a table of loaded zones, for example
+
+```lua
+{
+    demonstration = "someResource",
+    falcon_casino_floor_1 = "falcon-casino",
+    tutorial = "triggerzone_test",
+}
+```
+
+The key is the zone name, the value is the resource of origin.
 
 ## GetZoneFilenames
 
-TODO: GetZoneFilenames example code.
+```lua
+local filenames = exports.triggerzone:GetZoneFilenames()
+for _, filename in ipairs(filenames) do
+    exports.triggerzone:Load(filename)
+end
+```
+
+Optionally takes a resource name as an argument. By default, it will use the resource it is called from.
+
+Returns a table of filenames for any .tzf files in that resource, in no particular order, for example
+
+```lua
+{ "pdm_behind_counter.tzf", "pdm_office_1.tzf", "pdm_office_2.tzf", "pdm_mechanic_bay.tzf" }
+```
+
+Useful for autoloading zone files without having to maintain a list.
 
 ## GetZoneLabel
 
-TODO: GetZoneLabel example code.
+```lua
+function DoThingInZone(player, zone)
+    local coords = GetEntityCoords(GetPlayerPed(player))
+    if exports.triggerzone:IsPointInsideZone(coords, zone) then
+        DoTheThing(player, zone)
+    else
+        print( ("You must be in %s to do the thing!"):format(exports.triggerzone:GetZoneLabel(zone)) )
+    end
+end
+```
+
+Returns a string. If the zone is not loaded, it returns an *empty* string, and if there is no label set, it returns the zone name as given.
 
 ## GetZonesAtPoint
 
-TODO: GetZonesAtPoint example code.
+```lua
+function WhereIsNPC(npc)
+    local coords = GetEntityCoords(npc)
+    local zones = exports.triggerzone:GetZonesAtPoint(coords)
+    for zoneName, label  in pairs(zones) do
+        print( ("NPC is in %s!"):format(label) )
+        Frobnicate(npc, zoneName)
+    end
+end
+```
+
+Iterates through all loaded zones, and checks if the given point is in them.
+Returns a table of zones, with their label, that the point is in.
+For example,
+
+```lua
+{
+    del_perro_pier = "The Pier",
+    pier_hotdog_stand_3 = "Hotdog stand",
+}
+```
 
 ## IsPointInsideZone
 
-TODO: IsPointInsideZone example code.
+```lua
+function OpenBossMenu(player)
+    local coords = GetEntityCoords(GetPlayerPed(player))
+    if exports.triggerzone:IsPointInsideZone(coords, "laywer_boss_office") then
+        TriggerClientEvent("laywerjob:showBossMenu", player)
+    else
+        TriggerClientEvent("laywerjob:showMessage", player, "You must be in your office to do that.")
+    end
+end
+```
+
+Returns a boolean. If the zone is not loaded, it will always return false, as no point can ever be inside an unloaded zone.
 
 ## Load
 
-TODO: Load example code.
+```lua
+local filenames = exports.triggerzone:GetZoneFilenames()
+for _, filename in ipairs(filenames) do
+    exports.triggerzone:Load(filename)
+end
+```
+
+Loads a zone file, and sends it to all clients for immediate use.
+
+Returns true if the load was successful, false otherwise.
+Will output success/failure to console as well.
 
 ## LoadZoneFile
 
-TODO: LoadZoneFile example code.
+```lua
+function LoadSporkZone()
+    local success, name, data = exports.triggerzone:LoadZoneFile('spork.tzf')
+    if not success then
+        print( ("Failed to load spork zone file, because %s"):format(name) )
+        return
+    end
+    print( ("Oh no, we loaded %s, and did nothing with it!"):format(data.label or name) )
+end
+```
+
+Loads the given zone file into memory, but does not send to clients or in any way make it available anywhere else.
+
+Returns three values.
+1. A boolean that tells you if the load was successful.
+2. A string that holds the name of the zone (as derived from the filename), *or* the reason it failed to load.
+3. A table containing the zone data, *or* just an empty table if the loading failed.
 
 ## Set
 
-TODO: Set example code.
+```lua
+function NoFileNeededHAHAHAHA()
+    local zoneData = {
+        label = "Why would you do this?!"
+        altitude = 36.4,
+        height = 2.0,
+        points = {
+            vector2(0.0, 0.0)
+            vector2(1.0, 0.0)
+            vector2(1.0, 1.0)
+            vector2(0.0, 1.0)
+        }
+    }
+    exports.triggerzone:Set("some_zone", zoneData)
+end
+```
+
+Sets a zone with the given zoneData, even if that data makes very little sense.  
+Always returns true, even if you are being silly, and the whole thing catches fire.  
+
+**Please, do not do this.  Use the editor instead.**  It is provided only for the warm, fuzzy feeling of completeness.
 
 ## Store
 
-TODO: Store example code.
+```lua
+function SabotageZoneFilesDirectory()
+    local zoneData = {
+        label = "Why would you do this?!"
+    }
+    local saved, filename, size = exports.triggerzone:Store("some_zone", zoneData)
+    if saved then
+        if size > 9000 then
+            print("OH WOW, where did all that data come from?!")
+        end
+    else
+        print("OH NO! TIME TO PANIC!!!")
+    end
+end
+```
+
+Writes out a zone file with the given zone data.
+
+Returns a boolean denoting if the save was successful, the name of the file it was saved as, and the length of the encoded messagepack string.
+
+Generally speaking, you should never need to do this yourself.  **Please don't use this.  Use the editor instead.**
 
 # Configuration file
 
