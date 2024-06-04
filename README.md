@@ -121,16 +121,154 @@ This will *discard* the local copy of the zone, and the server will respond with
 
 Unloads a zone by the name specified, if it is loaded. This takes immediate effect on all clients.
 
+# Editor hotkeys
+
+| Function             | Control action              | Default bind       |
+|----------------------|-----------------------------|--------------------|
+| Speed up camera      | 38 INPUT_PICKUP             | E                  |
+| Slow down camera     | 44 INPUT_COVER              | Q                  |
+| Boost camera speed   | 21 INPUT_SPRINT             | Left Shift         |
+| Interact with vertex | 24 INPUT_ATTACK             | Left mouse button  |
+| Delete vertex        | 25 INPUT_AIM                | Right mouse button |
+| Move camera forward  | 32 INPUT_MOVE_UP_ONLY       | W                  |
+| Move camera backward | 33 INPUT_MOVE_DOWN_ONLY     | S                  |
+| Move camera left     | 34 INPUT_MOVE_LEFT_ONLY     | D                  |
+| Move camera right    | 35 INPUT_MOVE_RIGHT_ONLY    | A                  |
+| Modifier             | 36 INPUT_DUCK               | Left Ctrl          |
+| Decrease value       | 16 INPUT_SELECT_NEXT_WEAPON | Scrollwheel down   |
+| Increase value       | 17 INPUT_SELECT_PREV_WEAPON | Scrollwheel up     |
+| Toggle UI focus      | 22 INPUT_JUMP               | Spacebar           |
+
+## Interacting with verticies
+
+Left-clicking while the cursor is yellow inserts a vertex at the given position.
+Clicking and holding will insert the vertex, and then let you drag it into place.
+
+Similarly, when the cursor is red, you can click and drag the closest vertex to a new position.
+
+## Adjusting altitude and height
+
+The "Decrese value" and "Increase value" controls do different things depending on if "Modifier" is pressed.
+
+*Without* the modifier, it will increase and decrease the *Height* property of the zone.
+*With* the modifier, it will increase and decrease the *Altitude* property of the zone.
+
 # Editor UI
 
 Large parts of the editor UI was designed and implemented by [MonBjo on GitHub](<https://github.com/MonBjo/triggerzones-ui>).
 Thank you very much for the assist!
 
+**To interact with the input fields and buttons, press the space bar.**
+
 If you are brand new to the triggerzone, you might want to look at [the tutorial](tutorial/index.md) as well.
 
-TODO: Editor screenshot goes here.
+![Triggerzone UI](tutorial/Editor.png)
 
-TODO: Legend of above screenshot goes here.
+1. Zone controls
+2. Points list
+3. Area visualizer
+4. Cursor-and-beam
+5. Centroid
+6. Glance data
+7. Color controls
+8. Minimap
+
+## 1. Zone controls
+
+This area holds a number of controls that define how your zone behaves.
+
+### Label
+
+This is the label drawn at the centroid, and is sent with the zone name in events. This is what you intend for the zone to be called, or referred to as, when interacting with a user.
+
+### Altitude
+
+The floor of your zone is this altitude above global zero.  This is set when you place the first point, but you can edit it freely.
+This can also be adjusted with the hotkey Ctrl+Scrollwheel, assuming you have the default GTAV keybinds.
+
+### Height
+
+The distance, in meters, from the Altitude to the ceiling of the zone.
+For reference, the default player ped is 2.0 units tall, but it's location is 1.0 units above where it is standing.  This means a zone that is flush with the floor will have to be just slightly taller than 1.0 for it to register players standing in it, but to not register them if they jump.
+
+### Event
+
+Does this zone trigger an event when entering or leaving it?
+
+*Note:  This has performance implications.*
+
+### Draw
+
+Is this zone drawn, even when it is not being edited?
+
+*Note:  This has serious performance implications.*
+
+### Cancel
+
+Discard all changes since the last save, and stop editing this zone.
+
+### Save
+
+Save changes made to this zone, and send them to the server. It is then distributed to all clients immediately!
+
+## 2. Points list
+
+This list shows the current points that make up your zone. Note that the points are not in any way preserved, and their number/index will hop around as you edit the zones. This is due to the polygon cleanup that happens behind the scenes.
+
+If you click one of the points, you can then use the Action buttons below.
+*View* will move the camera to put the point into view.
+*Delete* will remove the point permanently.
+
+You can hide the points list by clicking the little arrow.
+
+## 3. Area visualizer
+
+The area visualizer shows the walls, floor, and ceiling of your zone.
+When your player ped is inside the zone, as shown in the screenshot, it will use the Active zone color. When you are outside, it will use the Inactive zones color.
+
+Note that while the lines and walls are drawn in 3D space, the vertex labels are drawn on top, and will show through the world. If you move your camera too far from the zone, it will no longer draw the labels.
+
+## 4. Cursor-and-beam
+
+The spherical cursor shows you your intraction range. When it turns red, you will interact with the closest vertex. When it is yellow, you are in insert mode.
+
+When it is interact mode, the glance data will update to show which vertex you will interact with.
+When it is in insert mode, the glance data will update to show what index the new vertex will have.
+
+The beam shows where the zone corner will be, and obeys Altitude and Height, even if the cursor is above or below the zone.
+
+## 5. Centroid
+
+This shows the current label for the zone, and where the geometric centroid of the zone is.
+This does not have to be *inside* the zone, it's just a marker.
+The centroid beam shows the height of the zone, just like the cursor beam.
+
+Note that this will move around as you edit the zone.
+
+## 6. Glance data
+
+This little blob of text will show you some data about the state of the editor.
+
+- Filename
+- Number of verticies (misspelled in the screenshot, since fixed)
+- The current camera speed (Use Q and E to adjust)
+- Interaction hint
+
+The interaction hint in the screenshot shows that a new vertex will be inserted at index 12.
+When the cursor is close enough to an existing vertex, it will turn red, and the interaction hint will tell you what vertex you will interact with.
+
+## 7. Color controls
+
+These are the colors of active and inactive zones. A zone is active when your current player ped is *inside* it.
+
+Note that the walls and lines have *separate* alpha values.  The vertex labels follow the lines alpha value.
+
+## Minimap
+
+The minimap will still show everything it would normally show, but it will now focus on where your cursor is.
+The little ring shown is not to any sort of scale, but it will tell you exactly where the cursor is, not where the camera is.
+
+Zoom is adjusted according to the distance between the camera and the cursor, meaning you get a very zoomed in view if you are editing up close.
 
 # Exported functions
 
