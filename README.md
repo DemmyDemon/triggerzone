@@ -10,7 +10,7 @@ The short version is that triggerzone triggers an even then you leave or exit a 
 
 ## Defining zones
 
-There is [a tutorial](tutorial/index.md) that walks you through creating your first zone. It is done by placing verticies on the ground by clicking, and is, hopefully, very intuitive.
+There is [a tutorial](tutorial/README.md) that walks you through creating your first zone. It is done by placing verticies on the ground by clicking, and is, hopefully, very intuitive.
 
 ## Loading zones
 
@@ -67,7 +67,7 @@ If a third argument is specified, that lets you specify what resource to load fr
 
 This presumes the zone named `whatever` is already loaded, and will start the editor interface to fiddle with that zone.
 
-This works exactly like in [the tutorial](tutorial/index.md), except it will have points already in it.
+This works exactly like in [the tutorial](tutorial/README.md), except it will have points already in it.
 
 ## help
 
@@ -103,7 +103,7 @@ If a third argument is specified, that lets you specify what resource to load fr
 `/triggerzone new aw_yiss`
 
 This will create a brand new zone named `aw_yiss`, and open it for editing.  
-See [the tutorial](tutorial/index.md) for details.
+See [the tutorial](tutorial/README.md) for details.
 
 When naming zones, keep in mind that they can't have special symbols, or spaces, in their names, as the name ends up being the filename.  Also, keep in mind that you might conflict with other resoruces, so rather than using a generic name, use one specific to your resource.  For example, rather than `parking`, use `falcon_casino_parking`, or whatever matches your resource.
 
@@ -160,7 +160,7 @@ Thank you very much for the assist!
 
 **To interact with the input fields and buttons, press the space bar.**
 
-If you are brand new to the triggerzone, you might want to look at [the tutorial](tutorial/index.md) as well.
+If you are brand new to the triggerzone, you might want to look at [the tutorial](tutorial/README.md) as well.
 
 ![Triggerzone UI](tutorial/Editor.png)
 
