@@ -1,3 +1,7 @@
+# PRE-RELEASE SOFTWARE
+
+Triggerzone isn't fully released yet. Consider this a pre-release Beta. **Do not use in production.**
+
 # Triggerzone
 
 Triggerzone is not intended for end user use. It is a development tool and a development library, intended to supply a useful function to FiveM script developers.
