@@ -10,7 +10,7 @@ It does not function without FiveM. This is intentional. It does nothing alone. 
 
 # What it does
 
-The short version is that triggerzone triggers an even then you leave or exit a "zone", and provides an editor interface for defining such zones.
+The short version is that triggerzone triggers an event when you leave or exit a "zone", and provides an editor interface for defining such zones.
 
 ## Defining zones
 
